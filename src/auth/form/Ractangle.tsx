@@ -77,12 +77,14 @@ const Ractangle = ({ children }: Props) => {
         </svg>
         <div>{children}</div>
       </div>
-      <div className="absolute max-w-[848px] w-full bg-white min-h-screen right-0   ">
-        <img
-          className=" max-h-[614px] mr-[164px] ml-[79px] mt-[113px] mb-[83px] "
-          srcSet="/group.png 2x"
-          alt="group"
-        />
+      <div className="fixed w-full max-w-[848px]  bg-white min-h-screen right-0   ">
+        <div className="w-full h-full flex justify-center items-center mt-[112px]">
+          <img
+            className=" flex-shrink-0 object-cover "
+            srcSet="/group.png 2x"
+            alt="group"
+          />
+        </div>
         <div className="absolute top-[403px] left-[440px] text-orange ">
           <span className="text-4xl">Hệ thống</span>
           <h1 className="text-[36px] leading-[54px] font-extrabold">

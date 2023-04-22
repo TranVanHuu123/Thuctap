@@ -1,7 +1,7 @@
 import React from "react";
-import Ractangle from "../auth/Ractangle";
-import Input from "../components/Input";
-import Button from "../components/Button";
+import Ractangle from "../../auth/form/Ractangle";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
 
 type Props = {};
 

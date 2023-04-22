@@ -1,14 +1,14 @@
 import React from "react";
-import Ractangle2 from "../auth/Ractangle2";
-import Input from "../components/Input";
-import Button from "../components/Button";
+import Ractangle2 from "../../auth/form/Ractangle2";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
 
 type Props = {};
 
 const Forgotpassword = (props: Props) => {
   return (
     <Ractangle2>
-      <div className="mt-[102px]   max-w-[440px] w-full ">
+      <div className="mt-[102px] max-w-[440px] w-full ml-[94px]">
         <h1 className="text-[22px] font-bold leading-[22px] text-center mb-4">
           Đặt lại mật khẩu
         </h1>
@@ -24,7 +24,7 @@ const Forgotpassword = (props: Props) => {
           autoComplete="off"
         ></Input>
         <div className="flex gap-[24px] justify-center items-center mt-[48px] ">
-          <Button text="orange" bg="transparent" name="Hủy"></Button>
+          <Button text="text-orange" bg="bg-transparent" name="Hủy"></Button>
           <Button text="" bg="" name="Tiếp tục"></Button>
         </div>
       </div>
