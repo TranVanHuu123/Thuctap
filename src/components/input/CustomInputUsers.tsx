@@ -7,17 +7,17 @@ type Props = {
   autoComplete: string;
 };
 
-const InputUsers = ({ label, ...props }: Props) => {
+const CustomInputUsers = ({ label, ...props }: Props) => {
   return (
-    <div className="flex flex-col ml-[296px] mt-[2.1rem]">
+    <div className="flex flex-col w-full mt-6">
       <label htmlFor={props.id || props.name}>{label}</label>
       <input
         type="text"
-        className="w-[384px] h-[44px]  bg-gray50 rounded-md mt-2 p-2 text-gray400text"
+        className=" w-full h-[44px]  bg-gray50 rounded-md mt-2 p-2 text-gray400text"
         {...props}
       ></input>
     </div>
   );
 };
 
-export default InputUsers;
+export default CustomInputUsers;

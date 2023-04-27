@@ -9,7 +9,7 @@ const Ractangle2 = ({ children }: Props) => {
     <div className="">
       <div className=" fixed left-0 top-0 bg-bg  min-h-screen w-[calc(100%-848px)] ">
         <svg
-          className="inline-block mt-[82px] ml-[224px]"
+          className="inline-block mt-[82px] ml-[252px]"
           width="170"
           height="136"
           viewBox="0 0 391 313"
@@ -80,7 +80,7 @@ const Ractangle2 = ({ children }: Props) => {
       <div className="bg-white  fixed right-0 top-0 bottom-0 max-w-[848px] w-full ">
         <img
           className="w-[711px] h-[560px] ml-[43px]  mb-[83px] mt-[153px]"
-          srcSet="/Frame.png 2x"
+          srcSet="/Frame123.png 2x"
           alt="group"
         />
       </div>

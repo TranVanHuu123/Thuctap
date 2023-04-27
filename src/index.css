@@ -3,6 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 html,
 body,
 #root,
@@ -37,4 +42,55 @@ body,
 }
 .shadowitem {
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+.colorRgb {
+  background-color: rgba(255, 149, 1, 0.15);
+}
+.select {
+  font-size: 16px;
+  line-height: 24px;
+  color: #535261;
+}
+.l1:hover {
+  background: #fff2e7;
+}
+.l2:hover {
+  background: #fff2e7;
+}
+.l3:hover {
+  background: #fff2e7;
+}
+table {
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
+  border-spacing: 1px;
+  table-layout: auto;
+}
+th {
+  border: 1px solid #ff9138;
+  background: #ff9138;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: bold;
+  padding-left: 16px;
+  padding-bottom: 13px;
+  padding-top: 13px;
+  color: white;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  text-align: left;
+}
+
+td {
+  padding: 6px 0;
+  font-size: 14px;
+  line-height: 21px;
+  padding-left: 16px;
+  color: #535261;
+  border-left: 1px solid #ffe3cd;
+  border-right: 1px solid #ffe3cd;
+  text-align: left;
+}
+tr:nth-of-type(even) {
+  background-color: #fff2e7;
 }

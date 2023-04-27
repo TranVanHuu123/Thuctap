@@ -1,10 +1,18 @@
 import React from "react";
 import Menubar from "../../auth/user/Menubar";
+import MenuRight from "../../auth/dashboard/MenuRight";
+import DashboardMain from "../../auth/dashboard/DashboardMain";
 
 type Props = {};
 
 const Dashboard = (props: Props) => {
-  return <div></div>;
+  return (
+    <div className="relative">
+      <Menubar></Menubar>
+      <DashboardMain></DashboardMain>
+      <MenuRight></MenuRight>
+    </div>
+  );
 };
 
 export default Dashboard;

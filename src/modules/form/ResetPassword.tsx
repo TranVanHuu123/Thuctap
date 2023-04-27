@@ -1,6 +1,6 @@
 import React from "react";
-import InputPass from "../../components/InputPass";
-import Button from "../../components/Button";
+import InputPass from "../../components/input/CustomInputPass";
+import Button from "../../components/button/CustomButton";
 import Ractangle2 from "../../auth/form/Ractangle2";
 
 type Props = {};

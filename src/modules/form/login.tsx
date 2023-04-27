@@ -1,7 +1,7 @@
 import React from "react";
 import Ractangle from "../../auth/form/Ractangle";
-import Input from "../../components/Input";
-import Button from "../../components/Button";
+import Input from "../../components/input/CustomInput";
+import Button from "../../components/button/CustomButton";
 
 type Props = {};
 
@@ -10,6 +10,7 @@ const login = (props: Props) => {
     <Ractangle>
       <form className="mt-[83px] ml-[94px] max-w-[440px] ">
         <Input
+          placeholder=""
           type="text"
           label="Tên đăng nhập *"
           className="mb-4 p-2 w-[440px] h-[44px] rounded-lg border-[1px] border-solid border-gray"
@@ -17,9 +18,9 @@ const login = (props: Props) => {
           id="name"
           autoComplete="off"
         ></Input>
-        <div className="flex flex-col  gap-1">
+        <div className="flex flex-col gap-1">
           <span>Mật khẩu *</span>
-          <div className="flex relative items-center">
+          <div className="relative flex items-center">
             <input
               type="password"
               className="pl-2 w-[440px] h-[44px] rounded-lg border-[1px] border-solid border-gray"

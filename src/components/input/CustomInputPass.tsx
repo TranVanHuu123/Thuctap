@@ -7,7 +7,7 @@ type Props = {
   type: string;
 };
 
-const InputPass = ({ label, ...props }: Props) => {
+const CustomInputPass = ({ label, ...props }: Props) => {
   return (
     <div className="flex flex-col gap-1 mt-4">
       <label
@@ -16,7 +16,7 @@ const InputPass = ({ label, ...props }: Props) => {
       >
         {label}
       </label>
-      <div className="flex relative items-center">
+      <div className="relative flex items-center">
         <input
           autoComplete="off"
           {...props}
@@ -32,4 +32,4 @@ const InputPass = ({ label, ...props }: Props) => {
   );
 };
 
-export default InputPass;
+export default CustomInputPass;

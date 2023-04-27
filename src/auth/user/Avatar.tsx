@@ -13,14 +13,18 @@ const Avatar = (props: Props) => {
       <div className="flex gap-2">
         <div className="w-10 h-10 rounded-full">
           <img
-            className="w-full h-full object-cover rounded-full"
+            className="object-cover w-full h-full rounded-full"
             srcSet="/avatar.png 2x"
             alt="avatr"
           />
         </div>
         <div className="">
-          <span>Xin chào</span>
-          <h2>Lê Quỳnh Ái Vân</h2>
+          <span className="text-[12px] leading-[18px] text-gray300">
+            Xin chào
+          </span>
+          <h2 className="text-[16px] font-bold leading-6 text-gray400text">
+            Lê Quỳnh Ái Vân
+          </h2>
         </div>
       </div>
     </div>

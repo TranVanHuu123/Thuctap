@@ -11,7 +11,11 @@ const Menu = (props: Props) => {
           Dashboard
         </li>
         <li className="menu-item">
-          <img className="menu-icon" srcSet="/monitor.png 2x" alt="monitor" />
+          <img
+            className="menu-icon"
+            srcSet="/monitor123.png 2x"
+            alt="monitor"
+          />
           Thiết bị
         </li>
         <li className="menu-item">
