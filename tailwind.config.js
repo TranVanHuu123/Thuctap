@@ -20,6 +20,7 @@ module.exports = {
         gray500: "#282739",
         colorGreen: "#34CD26",
         colorPl: "#cbcbcb",
+        gray200: "#A9A9B0",
       },
     },
   },

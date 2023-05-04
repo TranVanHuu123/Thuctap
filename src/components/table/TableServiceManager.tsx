@@ -1,12 +1,13 @@
 import React from "react";
 import Add from "./Add";
+import AddNewProgression from "./AddNewProgression";
 
 type Props = {};
 
-const Table = (props: Props) => {
+const TableServiceManager = (props: Props) => {
   return (
     <div className="w-full mt-4 bg-white rounded-xl">
-      <Add></Add>
+      <AddNewProgression></AddNewProgression>
       <table className="w-full ">
         <thead>
           <tr>
@@ -16,7 +17,7 @@ const Table = (props: Props) => {
             <th>Trạng thái hoạt động</th>
             <th>Trạng thái kết nối </th>
             <th>Dịch vụ sử dụng</th>
-            <th></th>
+            <th>Nguồn cấp</th>
             <th></th>
           </tr>
         </thead>
@@ -51,7 +52,7 @@ const Table = (props: Props) => {
               <a href="q">Chi tiết</a>
             </td>
             <td className="underline text-blueSer">
-              <a href="q">Cập nhật</a>
+              <a href="q">Chi tiết </a>
             </td>
           </tr>
           <tr>
@@ -84,7 +85,7 @@ const Table = (props: Props) => {
               <a href="q">Chi tiết</a>
             </td>
             <td className="underline text-blueSer">
-              <a href="q">Cập nhật</a>
+              <a href="q">Chi tiết </a>
             </td>
           </tr>
           <tr>
@@ -117,7 +118,7 @@ const Table = (props: Props) => {
               <a href="q">Chi tiết</a>
             </td>
             <td className="underline text-blueSer">
-              <a href="q">Cập nhật</a>
+              <a href="q">Chi tiết </a>
             </td>
           </tr>
           <tr>
@@ -150,7 +151,7 @@ const Table = (props: Props) => {
               <a href="q">Chi tiết</a>
             </td>
             <td className="underline text-blueSer">
-              <a href="q">Cập nhật</a>
+              <a href="q">Chi tiết </a>
             </td>
           </tr>
           <tr>
@@ -183,7 +184,7 @@ const Table = (props: Props) => {
               <a href="q">Chi tiết</a>
             </td>
             <td className="underline text-blueSer">
-              <a href="q">Cập nhật</a>
+              <a href="q">Chi tiết </a>
             </td>
           </tr>
           <tr>
@@ -216,7 +217,7 @@ const Table = (props: Props) => {
               <a href="q">Chi tiết</a>
             </td>
             <td className="underline text-blueSer">
-              <a href="q">Cập nhật</a>
+              <a href="q">Chi tiết </a>
             </td>
           </tr>
           <tr>
@@ -249,7 +250,7 @@ const Table = (props: Props) => {
               <a href="q">Chi tiết</a>
             </td>
             <td className="underline text-blueSer">
-              <a href="q">Cập nhật</a>
+              <a href="q">Chi tiết </a>
             </td>
           </tr>
           <tr>
@@ -282,7 +283,7 @@ const Table = (props: Props) => {
               <a href="q">Chi tiết</a>
             </td>
             <td className="underline text-blueSer">
-              <a href="q">Cập nhật</a>
+              <a href="q">Chi tiết </a>
             </td>
           </tr>
           <tr>
@@ -315,7 +316,7 @@ const Table = (props: Props) => {
               <a href="q">Chi tiết</a>
             </td>
             <td className="underline text-blueSer">
-              <a href="q">Cập nhật</a>
+              <a href="q">Chi tiết </a>
             </td>
           </tr>
         </tbody>
@@ -324,4 +325,4 @@ const Table = (props: Props) => {
   );
 };
 
-export default Table;
+export default TableServiceManager;

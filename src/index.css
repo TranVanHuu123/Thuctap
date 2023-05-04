@@ -17,16 +17,73 @@ body,
   font-family: "Nunito";
   background: #f6f6f6;
 }
-.menu-item {
+.alink {
+  display: flex;
+  gap: 8px;
+  color: #7e7d88;
+  cursor: pointer;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   padding-left: 1.0625rem;
   padding-right: 4.75rem;
-  display: flex;
-  gap: 0.5rem;
-  cursor: pointer;
-  color: #7e7d88;
 }
+.link-active {
+  display: flex;
+  gap: 8px;
+  color: #7e7d88;
+  cursor: pointer;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1.0625rem;
+  padding-right: 4.75rem;
+  background-color: #ff9138;
+  color: white;
+}
+.alinks {
+  display: inline-flex;
+  flex-direction: row;
+  gap: 8px;
+  color: #7e7d88;
+  cursor: pointer;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1.0625rem;
+  padding-right: 1.9rem;
+}
+.link-actives {
+  display: inline-flex;
+  gap: 8px;
+
+  cursor: pointer;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1.0625rem;
+  padding-right: 1.9rem;
+  background-color: #ff9138;
+  color: white;
+}
+.link-dropdown {
+  color: #7e7d88;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1.0625rem;
+  padding-right: 1.9rem;
+}
+.link-dropdown-hover {
+  color: white;
+  background-color: #ff9138;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1.0625rem;
+  padding-right: 1.9rem;
+}
+.list-item-drop {
+  display: none;
+}
+.menu-dropdown:hover .list-item-drop {
+  display: flex;
+}
+
 .menu-itemlast {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
@@ -82,7 +139,8 @@ th {
 }
 
 td {
-  padding: 6px 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
   font-size: 14px;
   line-height: 21px;
   padding-left: 16px;

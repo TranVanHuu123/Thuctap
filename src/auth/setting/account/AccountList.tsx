@@ -1,16 +1,15 @@
 import React from "react";
-import Avatar from "../user/Avatar";
-import Customdropdown from "../../components/dropDown/Customdropdown";
-import CustomInputPass from "../../components/input/CustomInputPass";
-import CustomInputSearch from "../../components//input/CustomInputSearch";
-import Table from "../../components/table/Table";
-import Add from "../../components/table/Add";
-import NextPage from "../../components/table/NextPage";
-import Frame from "../frame/Frame";
+import Frame from "../../frame/Frame";
+import Avatar from "../../user/Avatar";
+import Customdropdown from "../../../components/dropDown/Customdropdown";
+import CustomInputSearch from "../../../components/input/CustomInputSearch";
+import TableService from "../../../components/table/TableService";
+import NextPage from "../../../components/table/NextPage";
+import TableAccount from "../../../components/table/TableAccount";
 
 type Props = {};
 
-const DeviceMain = (props: Props) => {
+const AccountList = (props: Props) => {
   return (
     <Frame>
       <div className="mb-[30px] max-w-[1240px] w-full flex  gap-x-[642px] justify-center items-center">
@@ -26,31 +25,29 @@ const DeviceMain = (props: Props) => {
             />
           </div>
           <span className="text-[20px] leading-[30px] text-orange font-bold">
-            Danh sách thiết bị
+            Danh sách dịch vụ
           </span>
         </div>
         <Avatar></Avatar>
       </div>
 
       <span className="text-[24px] left-9 text-orange font-bold inline-block mb-[16px]">
-        Danh sách thiết bị
+        Quản lý dịch vụ
       </span>
 
       <div className="max-w-[1112px] w-full">
         <div className="flex items-center justify-between">
-          <div className="flex gap-x-6">
-            <Customdropdown title="Trạng thái hoạt động"></Customdropdown>
-            <Customdropdown title="Trạng thái kết nối"></Customdropdown>
-          </div>
+          <Customdropdown title="Tên vai trò"></Customdropdown>
+
           <div className="mt-[-15px]">
             <CustomInputSearch></CustomInputSearch>
           </div>
         </div>
-        <Table></Table>
+        <TableAccount></TableAccount>
       </div>
       <NextPage></NextPage>
     </Frame>
   );
 };
 
-export default DeviceMain;
+export default AccountList;

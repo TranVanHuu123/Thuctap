@@ -3,7 +3,7 @@ import Add from "./Add";
 
 type Props = {};
 
-const Table = (props: Props) => {
+const TableService = (props: Props) => {
   return (
     <div className="w-full mt-4 bg-white rounded-xl">
       <Add></Add>
@@ -324,4 +324,4 @@ const Table = (props: Props) => {
   );
 };
 
-export default Table;
+export default TableService;

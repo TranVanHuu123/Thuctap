@@ -10,7 +10,7 @@ const Menubar = (props: Props) => {
         <img srcSet="/logoalta.png 2x" alt="" />
       </div>
       <Menu></Menu>
-      <div className="flex justify-center items-center mt-[380px]">
+      <div className="flex justify-center items-center mt-[450px]">
         <button className=" flex justify-center items-center gap-3 w-[176px] h-[48px]  rounded-lg bg-redor text-colorred">
           <img srcSet="/logout.png 2x" alt="logout" />
           Đăng xuất
