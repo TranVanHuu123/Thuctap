@@ -1,7 +1,6 @@
 import TabBarMain from "./modules/users/TabBarMain";
 import Dashboard from "./modules/dashboard/Dashboard";
 import Device from "./modules/device/Device";
-import Login from "./modules/form/login";
 import Forgotpassword from "./modules/form/Forgotpassword";
 import ResetPassword from "./modules/form/ResetPassword";
 import AddDevice from "./modules/device/AddDevice";
@@ -26,11 +25,14 @@ import Acount from "./modules/account/Acount";
 import Diary from "./modules/diary/Diary";
 import AddAccount from "./modules/account/AddAccount";
 import UpdateAccount from "./modules/account/UpdateAccount";
+import SignUpPage from "./modules/form/SignUpPage";
+import { AuthProvider } from "./context/Auth-context";
+import SignInPage from "./modules/form/SignInPage";
 
 function App() {
   return (
     <div className="App">
-      {/* <Login></Login> */}
+      {/* <SignUpPage></SignUpPage> */}
       {/* <Forgotpassword></Forgotpassword> */}
       {/* <ResetPassword></ResetPassword> */}
       {/* <TabBarMain></TabBarMain> */}
@@ -46,26 +48,41 @@ function App() {
       {/* <DetailProgression></DetailProgression> */}
       {/* <UpdateRole></UpdateRole> */}
       {/* <UpdateAccount></UpdateAccount> */}
-      <Routes>
-        <Route path="/" element={<Main></Main>}></Route>
-        <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
-        <Route path="/device" element={<Device></Device>}></Route>
-        <Route path="/service" element={<ServiceList></ServiceList>}></Route>
-        <Route
-          path="/progression"
-          element={<ProgressionList></ProgressionList>}
-        ></Route>
-        <Route
-          path="/newprogression"
-          element={<NewProgression></NewProgression>}
-        ></Route>
-        <Route path="/report" element={<Report></Report>}></Route>
-        <Route path="/role" element={<Role></Role>}></Route>
-        <Route path="/addrole" element={<AddRole></AddRole>}></Route>
-        <Route path="/acount" element={<Acount></Acount>}></Route>
-        <Route path="/diary" element={<Diary></Diary>}></Route>
-        <Route path="/addAccount" element={<AddAccount></AddAccount>}></Route>
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<SignInPage></SignInPage>}></Route>
+          <Route
+            path="/resetpassword"
+            element={<ResetPassword></ResetPassword>}
+          ></Route>
+          <Route path="/tabbarmain" element={<TabBarMain></TabBarMain>}></Route>
+          <Route element={<Main></Main>}>
+            <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
+            <Route path="/device" element={<Device></Device>}></Route>
+            <Route
+              path="/service"
+              element={<ServiceList></ServiceList>}
+            ></Route>
+            <Route
+              path="/progression"
+              element={<ProgressionList></ProgressionList>}
+            ></Route>
+            <Route
+              path="/newprogression"
+              element={<NewProgression></NewProgression>}
+            ></Route>
+            <Route path="/report" element={<Report></Report>}></Route>
+            <Route path="/role" element={<Role></Role>}></Route>
+            <Route path="/addrole" element={<AddRole></AddRole>}></Route>
+            <Route path="/acount" element={<Acount></Acount>}></Route>
+            <Route path="/diary" element={<Diary></Diary>}></Route>
+            <Route
+              path="/addAccount"
+              element={<AddAccount></AddAccount>}
+            ></Route>
+          </Route>
+        </Routes>
+      </AuthProvider>
     </div>
   );
 }

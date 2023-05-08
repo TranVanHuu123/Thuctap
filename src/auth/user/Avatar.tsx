@@ -1,4 +1,5 @@
 import React from "react";
+import { db, auth } from "../../firebase-app/Firebase-config";
 
 type Props = {};
 
@@ -23,7 +24,7 @@ const Avatar = (props: Props) => {
             Xin chào
           </span>
           <h2 className="text-[16px] font-bold leading-6 text-gray400text">
-            Lê Quỳnh Ái Vân
+            {auth.currentUser?.displayName}
           </h2>
         </div>
       </div>

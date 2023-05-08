@@ -1,10 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CustomInputUsers from "../../components/input/CustomInputUsers";
 import Avatar from "./Avatar";
-
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { db, auth } from "../../firebase-app/Firebase-config";
+import Label from "../../components/label/Label";
+import Input from "../../components/input/Input";
+import { useForm } from "react-hook-form";
+import { onAuthStateChanged } from "firebase/auth";
 type Props = {};
 
 const MenuBarMain = (props: Props) => {
+  // const [nameUser, setNameUser] = useState([]);
+  // console.log(nameUser);
+
+  // useEffect(() => {
+  //   const colRef = collection(db, "users");
+  //   const queries = query(colRef);
+  //   onSnapshot(queries, (snapshot) => {
+  //     const results: any = [];
+  //     snapshot.forEach((doc) => {
+  //       results.push({
+  //         id: doc.id,
+  //         ...doc.data(),
+  //       });
+  //     });
+  //     // console.log(results);
+  //     setNameUser(results);
+  //   });
+  // }, []);
+  const [userInfo, setUserInfo] = useState<any | null>("");
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUserInfo(currentUser);
+      } else {
+        setUserInfo("");
+      }
+    });
+  }, []);
+  const {
+    handleSubmit,
+    control,
+    formState: { isValid },
+  } = useForm({
+    mode: "onChange",
+  });
   return (
     <div>
       <div className="ml-[224px]  min-h-screen ">
@@ -24,56 +64,128 @@ const MenuBarMain = (props: Props) => {
                   alt="avatar"
                 />
                 <img
-                  className="absolute left-[163px] top-[213px]"
+                  className="absolute left-[163px] top-[261px]"
                   srcSet="Group624817.png 2x"
                   alt=""
                 />
               </div>
-              <h1 className="absolute mt-5 left-[38px] text-[24px] leading-[36px] font-bold">
-                Lê Quỳnh Ái Vân
+              <h1 className="absolute mt-5 left-[84px] text-[24px] leading-[36px] font-bold">
+                {userInfo?.displayName}
               </h1>
             </div>
           </div>
           <div className="flex gap-x-6 mt-[20px] max-w-[808px] w-full">
             <div className=" max-w-[384px] w-full">
-              <CustomInputUsers
-                label="Tên người dùng"
-                id="nameuser"
-                name="nameuser"
-                autoComplete="off"
-              ></CustomInputUsers>
-              <CustomInputUsers
-                label="Số điện thoại"
-                id="number"
-                name="number"
-                autoComplete="off"
-              ></CustomInputUsers>
-              <CustomInputUsers
-                label="Email"
-                id="email"
-                name="email"
-                autoComplete="off"
-              ></CustomInputUsers>
+              <div className="flex flex-col gap-1 mt-6">
+                <Label
+                  className="text-base leading-6 font-semibold"
+                  htmlFor="name"
+                >
+                  Tên người dùng
+                </Label>
+                <Input
+                  autoComplete="off"
+                  placeholder={`${userInfo?.displayName}`}
+                  type="text"
+                  className=" w-full h-[44px] bg-gray50 rounded-md  border-gray"
+                  name="name"
+                  control={control}
+                >
+                  <span></span>
+                </Input>
+              </div>
+              <div className="flex flex-col gap-1 mt-6">
+                <Label
+                  className="text-base leading-6 font-semibold"
+                  htmlFor="phone"
+                >
+                  Số điện thoại
+                </Label>
+                <Input
+                  autoComplete="off"
+                  placeholder="0356753260"
+                  type="text"
+                  className=" w-full h-[44px] bg-gray50 rounded-md  border-gray"
+                  name="phone"
+                  control={control}
+                >
+                  <span></span>
+                </Input>
+              </div>
+              <div className="flex flex-col gap-1 mt-6">
+                <Label
+                  className="text-base leading-6 font-semibold"
+                  htmlFor="email"
+                >
+                  Email:
+                </Label>
+                <Input
+                  autoComplete="off"
+                  placeholder={`${userInfo?.email}`}
+                  type="text"
+                  className=" w-full h-[44px] bg-gray50 rounded-md  border-gray"
+                  name="email"
+                  control={control}
+                >
+                  <span></span>
+                </Input>
+              </div>
             </div>
             <div className="max-w-[384px] w-full">
-              <CustomInputUsers
-                label="Tên đăng nhập"
-                id="namelog"
-                name="namelog"
-                autoComplete="off"
-              ></CustomInputUsers>
-              <CustomInputUsers
-                label="Mật khẩu"
-                id="password"
-                name="password"
-                autoComplete="off"
-              ></CustomInputUsers>
-              <CustomInputUsers
-                label="Vai trò"
-                id="role"
-                name="role"
-                autoComplete="off"
-              ></CustomInputUsers>
+              <div className="flex flex-col gap-1 mt-6">
+                <Label
+                  className="text-base leading-6 font-semibold"
+                  htmlFor="nameaccount"
+                >
+                  Tên đăng nhập
+                </Label>
+                <Input
+                  autoComplete="off"
+                  placeholder={`${userInfo?.displayName}`}
+                  type="text"
+                  className=" w-full h-[44px] bg-gray50 rounded-md  border-gray"
+                  name="nameaccount"
+                  control={control}
+                >
+                  <span></span>
+                </Input>
+              </div>
+              <div className="flex flex-col gap-1 mt-6">
+                <Label
+                  className="text-base leading-6 font-semibold"
+                  htmlFor="password"
+                >
+                  Mật khẩu
+                </Label>
+                <Input
+                  autoComplete="off"
+                  placeholder="12345678"
+                  type="text"
+                  className=" w-full h-[44px] bg-gray50 rounded-md  border-gray"
+                  name="password"
+                  control={control}
+                >
+                  <span></span>
+                </Input>
+              </div>
+              <div className="flex flex-col gap-1 mt-6">
+                <Label
+                  className="text-base leading-6 font-semibold"
+                  htmlFor="role"
+                >
+                  Vai trò:
+                </Label>
+                <Input
+                  autoComplete="off"
+                  placeholder="Kế toán"
+                  type="text"
+                  className=" w-full h-[44px] bg-gray50 rounded-md  border-gray"
+                  name="role"
+                  control={control}
+                >
+                  <span></span>
+                </Input>
+              </div>
             </div>
           </div>
         </div>

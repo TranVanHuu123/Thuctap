@@ -1,11 +1,15 @@
 import React from "react";
 import Ractangle2 from "../../auth/form/Ractangle2";
-import Input from "../../components/input/CustomInput";
 import Button from "../../components/button/CustomButton";
+import Input from "../../components/input/Input";
+import { useForm } from "react-hook-form";
 
 type Props = {};
 
 const Forgotpassword = (props: Props) => {
+  const { handleSubmit, control } = useForm({
+    mode: "onSubmit",
+  });
   return (
     <Ractangle2>
       <div className="mt-[102px] max-w-[440px] w-full ml-[120px]">
@@ -16,17 +20,28 @@ const Forgotpassword = (props: Props) => {
           Vui lòng nhập email để đặt lại mật khẩu của bạn *
         </span>
         <Input
+          control={control}
           placeholder=""
           type="text"
-          label=""
-          className="mb-4 p-2 w-[440px] h-[44px] rounded-lg border-[1px] border-solid border-gray"
+          className="w-[440px] h-[44px]  border-gray"
           name="name"
-          id="name"
           autoComplete="off"
-        ></Input>
+        >
+          <span></span>
+        </Input>
         <div className="flex gap-[24px] justify-center items-center mt-[48px] ">
-          <Button text="text-orange" bg="bg-transparent" name="Hủy"></Button>
-          <Button text="" bg="" name="Tiếp tục"></Button>
+          <Button
+            className="max-w-[164px]  w-full h-[40px]"
+            text="text-orange"
+            bg="bg-transparent"
+            name="Hủy"
+          ></Button>
+          <Button
+            className="max-w-[164px]  w-full h-[40px]"
+            text=""
+            bg=""
+            name="Tiếp tục"
+          ></Button>
         </div>
       </div>
     </Ractangle2>
