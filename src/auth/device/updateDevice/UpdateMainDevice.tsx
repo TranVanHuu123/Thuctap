@@ -2,7 +2,7 @@ import React from "react";
 import PageDevice from "../../../components/titleDevicePage/PageDevice";
 import Avatar from "../../user/Avatar";
 import Frame from "../../frame/Frame";
-import UpdateDeviceInformation from "../UpdateDeviceInformation";
+import UpdateDeviceInformation from "./UpdateDeviceInformation";
 
 type Props = {};
 

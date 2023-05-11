@@ -1,9 +1,28 @@
 import Checkbox from "antd/es/checkbox/Checkbox";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../../../context/Auth-context";
+import { useSearchParams } from "react-router-dom";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../../firebase-app/Firebase-config";
 
 type Props = {};
 
 const DetailLeft = (props: Props) => {
+  const { userInfo } = useAuth();
+  const [serviceType, setServiceType] = useState<any>([]);
+
+  const [params] = useSearchParams();
+  const deviceId = params.get("id");
+
+  useEffect(() => {
+    async function fetchData() {
+      if (!deviceId) return null;
+      const docRef = doc(db, "service", deviceId);
+      const docSnapshot = await getDoc(docRef);
+      setServiceType(docSnapshot.data());
+    }
+    fetchData();
+  }, [deviceId]);
   return (
     <div className="max-w-[370px] w-full min-h-[606px] h-full bg-white rounded-xl pt-4 pl-4">
       <div>
@@ -17,9 +36,9 @@ const DetailLeft = (props: Props) => {
             <span>Mô tả:</span>
           </div>
           <div className="flex flex-col gap-y-3 text-[16px] leading-6 text-gray400text">
-            <span>201</span>
-            <span>Khám tim mạch </span>
-            <span>Chuyên các bệnh lý về tim</span>
+            <span>{serviceType?.idservice}</span>
+            <span>{serviceType?.name}</span>
+            <span>{serviceType?.describe}</span>
           </div>
         </div>
       </div>

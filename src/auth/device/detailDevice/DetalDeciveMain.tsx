@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { useAuth } from "../../../context/Auth-context";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../../firebase-app/Firebase-config";
 
 type Props = {};
 
 const DetalDeciveMain = (props: Props) => {
+  const { userInfo } = useAuth();
+  const [devicetype, setDevicetype] = useState<any>([]);
+
+  const [params] = useSearchParams();
+  const deviceId = params.get("id");
+
+  useEffect(() => {
+    async function fetchData() {
+      if (!deviceId) return null;
+      const docRef = doc(db, "device", deviceId);
+      const docSnapshot = await getDoc(docRef);
+      setDevicetype(docSnapshot.data());
+    }
+    fetchData();
+  }, [deviceId]);
   return (
     <div className="max-w-[1112px] w-full ">
       <div className="w-full bg-white min-h-[604px] h-full rounded-lg">
@@ -18,9 +37,9 @@ const DetalDeciveMain = (props: Props) => {
                 <span>Địa chỉ IP:</span>
               </div>
               <div className="flex flex-col gap-y-4 text-[16px] leading-6 text-gray400text">
-                <span>KIO_01</span>
-                <span>Kiosk</span>
-                <span>128.172.308</span>
+                <span>{devicetype?.devicecode}</span>
+                <span>{devicetype?.namedevice}</span>
+                <span>{devicetype?.ipaddress}</span>
               </div>
             </div>
             <div className="flex gap-x-[43px]">
@@ -31,8 +50,8 @@ const DetalDeciveMain = (props: Props) => {
               </div>
               <div className="flex flex-col gap-y-4 text-[16px] leading-6  text-gray400text">
                 <span>Kiosk</span>
-                <span>Linhkyo011</span>
-                <span>CMS</span>
+                <span>{devicetype?.nameaccount}</span>
+                <span>{devicetype?.password}</span>
               </div>
             </div>
           </div>
@@ -41,8 +60,7 @@ const DetalDeciveMain = (props: Props) => {
               Dịch vụ sử dụng:
             </span>
             <span className="text-[16px] leading-6 text-gray400text">
-              Khám tim mạch, Khám sản - Phụ khoa, Khám răng hàm mặt, Khám tai
-              mũi họng, Khám hô hấp, Khám tổng quát.
+              {devicetype?.dichvu}
             </span>
           </div>
         </div>

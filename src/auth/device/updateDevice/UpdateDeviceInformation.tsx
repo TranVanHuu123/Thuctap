@@ -1,51 +1,54 @@
 import React, { useEffect, useState } from "react";
-import CustomInput from "../../components/input/CustomInput";
-import CustomButton from "../../components/button/CustomButton";
-import CustomButtonDevice from "../../components/button/CustomButtonDevice";
-import CustomdropdownDevice from "../../components/dropDown/CustomdropdownDevice";
-import Dropdown from "../../components/dropDown/Dropdown";
-import Input from "../../components/input/Input";
-import Label from "../../components/label/Label";
+
 import { useForm } from "react-hook-form";
 import {
-  addDoc,
   collection,
   doc,
   getDoc,
   getDocs,
   query,
-  serverTimestamp,
+  updateDoc,
   where,
 } from "firebase/firestore";
-import { db } from "../../firebase-app/Firebase-config";
+import { useParams, useSearchParams } from "react-router-dom";
+import Swal from "sweetalert2";
+import { userRole } from "../../../uilts/constants";
+import { useAuth } from "../../../context/Auth-context";
+import Label from "../../../components/label/Label";
+import Input from "../../../components/input/Input";
+import CustomButton from "../../../components/button/CustomButton";
+import { db } from "../../../firebase-app/Firebase-config";
+import { toast } from "react-toastify";
 
 type Props = {};
 
-const DeviceInformation = (props: Props) => {
+const UpdateDeviceInformation = (props: Props) => {
   const {
-    register,
     handleSubmit,
     control,
     setValue,
-    getValues,
     reset,
     formState: { isValid, errors },
   } = useForm({
     mode: "onChange",
-    defaultValues: {
-      devicecode: "",
-      namedevice: "",
-      ipaddress: "",
-      dichvu: "",
-      nameaccount: "",
-      password: "",
-      devicetypeId: "",
-      // devicetypes: {},
-    },
   });
+  const { userInfo } = useAuth();
   const [devicetype, setDevicetype] = useState<any>([]);
-  const [selectDevicetype, setSelectDevicetype] = useState("");
 
+  const [params] = useSearchParams();
+  const deviceId = params.get("id");
+
+  useEffect(() => {
+    async function fetchData() {
+      if (!deviceId) return null;
+      const docRef = doc(db, "device", deviceId);
+      const docSnapshot = await getDoc(docRef);
+      if (docSnapshot.data()) {
+        reset(docSnapshot.data());
+      }
+    }
+    fetchData();
+  }, [deviceId, reset]);
   useEffect(() => {
     async function getData() {
       const colRef = collection(db, "devicetype");
@@ -63,36 +66,24 @@ const DeviceInformation = (props: Props) => {
     }
     getData();
   }, []);
-  const handleAddDevice = async (values: any) => {
-    const cloneValues = { ...values };
-    const colRef = collection(db, "device");
-    await addDoc(colRef, {
-      ...cloneValues,
-      createdAt: serverTimestamp(),
-    });
-    // toast.success("Create new post successfully!");
-    reset({
-      devicecode: "",
-      namedevice: "",
-      dichvu: "",
-      nameaccount: "",
-      password: "",
-      ipaddress: "",
-
-      // devicetypes: {},
-    });
+  const handleUpdateUser = async (values: any) => {
+    if (!deviceId) return null;
+    if (!isValid) return;
+    // if (userInfo?.role !== userRole.ADMIN) {
+    //   Swal.fire("Failed", "You have no right to do this action", "warning");
+    //   return;
+    // }
+    try {
+      const docRef = doc(db, "device", deviceId);
+      await updateDoc(docRef, { ...values });
+      toast.success("Update user information successfully!");
+    } catch (error) {
+      console.log(error);
+      toast.error("Update user failed!");
+    }
   };
-  // const handleClickOption = async (item: any) => {
-  //   const colRef = doc(db, "devicetype", item.id);
-  //   const docData = await getDoc(colRef);
-  //   setValue("devicetypes", {
-  //     id: docData.id,
-  //     ...docData.data(),
-  //   });
-  //   setSelectDevicetype(item);
-  // };
   return (
-    <form onSubmit={handleSubmit(handleAddDevice)}>
+    <form onSubmit={handleSubmit(handleUpdateUser)}>
       <div className="max-w-[1152px] w-full ">
         <div className="w-full bg-white min-h-[550px] h-full rounded-lg">
           <div className="px-6 pt-4">
@@ -247,7 +238,7 @@ const DeviceInformation = (props: Props) => {
             className="max-w-[180px]  w-full h-[48px] text-[16px] leading-[22px] pt-3 pb-3 pl-6 pr-6 "
             text=""
             bg=""
-            name="Thêm thiết bị"
+            name="Cập nhật"
           ></CustomButton>
         </div>
       </div>
@@ -255,4 +246,4 @@ const DeviceInformation = (props: Props) => {
   );
 };
 
-export default DeviceInformation;
+export default UpdateDeviceInformation;

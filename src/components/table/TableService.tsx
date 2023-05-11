@@ -1,323 +1,71 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Add from "./Add";
+import AddService from "./AddService";
+import { useNavigate } from "react-router-dom";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../../firebase-app/Firebase-config";
 
 type Props = {};
 
 const TableService = (props: Props) => {
+  const [serviceList, setServiceList] = useState<any>([]);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const colRef = collection(db, "service");
+    onSnapshot(colRef, (snapshot) => {
+      const results: any[] = [];
+      snapshot.forEach((doc) => {
+        results.push({
+          id: doc.id,
+          ...doc.data(),
+        });
+      });
+      setServiceList(results);
+    });
+  }, []);
   return (
     <div className="w-full mt-4 bg-white rounded-xl">
-      <Add></Add>
+      <AddService></AddService>
       <table className="w-full ">
         <thead>
           <tr>
-            <th>Mã thiết bị</th>
-            <th>Tên thiết bị</th>
-            <th>Địa chỉ IP</th>
+            <th>Mã dịch vụ</th>
+            <th>Tên dịch vụ </th>
+            <th>Mô tả</th>
             <th>Trạng thái hoạt động</th>
-            <th>Trạng thái kết nối </th>
-            <th>Dịch vụ sử dụng</th>
             <th></th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>KIO_01</td>
-            <td>Kiosk</td>
-            <td>192.168.1.10</td>
-            <td>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-red"></div>
-                <span>Ngưng hoạt động</span>
-              </div>
-            </td>
-            <td>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-red"></div>
-                <span>Mất kết nối</span>
-              </div>
-            </td>
-            <td>
-              <div className="flex flex-col">
-                <div>
-                  <span>Khám tim mạch, Khám mắt...</span>
-                </div>
-                <div className="underline text-blueSer">
-                  <a href="q">Xem thêm</a>
-                </div>
-              </div>
-            </td>
-            <td className="underline text-blueSer">
-              <a href="q">Chi tiết</a>
-            </td>
-            <td className="underline text-blueSer">
-              <a href="q">Cập nhật</a>
-            </td>
-          </tr>
-          <tr>
-            <td>KIO_01</td>
-            <td>Kiosk</td>
-            <td>192.168.1.10</td>
-            <td>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-colorGreen"></div>
-                <span>Hoạt động</span>
-              </div>
-            </td>
-            <td>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-colorGreen"></div>
-                <span>Kết nối</span>
-              </div>
-            </td>
-            <td>
-              <div className="flex flex-col">
-                <div>
-                  <span>Khám tim mạch, Khám mắt...</span>
-                </div>
-                <div className="underline text-blueSer">
-                  <a href="q">Xem thêm</a>
-                </div>
-              </div>
-            </td>
-            <td className="underline text-blueSer">
-              <a href="q">Chi tiết</a>
-            </td>
-            <td className="underline text-blueSer">
-              <a href="q">Cập nhật</a>
-            </td>
-          </tr>
-          <tr>
-            <td>KIO_01</td>
-            <td>Kiosk</td>
-            <td>192.168.1.10</td>
-            <td>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-red"></div>
-                <span>Ngưng hoạt động</span>
-              </div>
-            </td>
-            <td>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-red"></div>
-                <span>Mất kết nối</span>
-              </div>
-            </td>
-            <td>
-              <div className="flex flex-col">
-                <div>
-                  <span>Khám tim mạch, Khám mắt...</span>
-                </div>
-                <div className="underline text-blueSer">
-                  <a href="q">Xem thêm</a>
-                </div>
-              </div>
-            </td>
-            <td className="underline text-blueSer">
-              <a href="q">Chi tiết</a>
-            </td>
-            <td className="underline text-blueSer">
-              <a href="q">Cập nhật</a>
-            </td>
-          </tr>
-          <tr>
-            <td>KIO_01</td>
-            <td>Kiosk</td>
-            <td>192.168.1.10</td>
-            <td>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-colorGreen"></div>
-                <span>Hoạt động</span>
-              </div>
-            </td>
-            <td>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-colorGreen"></div>
-                <span>Kết nối</span>
-              </div>
-            </td>
-            <td>
-              <div className="flex flex-col">
-                <div>
-                  <span>Khám tim mạch, Khám mắt...</span>
-                </div>
-                <div className="underline text-blueSer">
-                  <a href="q">Xem thêm</a>
-                </div>
-              </div>
-            </td>
-            <td className="underline text-blueSer">
-              <a href="q">Chi tiết</a>
-            </td>
-            <td className="underline text-blueSer">
-              <a href="q">Cập nhật</a>
-            </td>
-          </tr>
-          <tr>
-            <td>KIO_01</td>
-            <td>Kiosk</td>
-            <td>192.168.1.10</td>
-            <td>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-red"></div>
-                <span>Ngưng hoạt động</span>
-              </div>
-            </td>
-            <td>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-red"></div>
-                <span>Mất kết nối</span>
-              </div>
-            </td>
-            <td>
-              <div className="flex flex-col">
-                <div>
-                  <span>Khám tim mạch, Khám mắt...</span>
-                </div>
-                <div className="underline text-blueSer">
-                  <a href="q">Xem thêm</a>
-                </div>
-              </div>
-            </td>
-            <td className="underline text-blueSer">
-              <a href="q">Chi tiết</a>
-            </td>
-            <td className="underline text-blueSer">
-              <a href="q">Cập nhật</a>
-            </td>
-          </tr>
-          <tr>
-            <td>KIO_01</td>
-            <td>Kiosk</td>
-            <td>192.168.1.10</td>
-            <td>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-colorGreen"></div>
-                <span>Hoạt động</span>
-              </div>
-            </td>
-            <td>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-colorGreen"></div>
-                <span>Kết nối</span>
-              </div>
-            </td>
-            <td>
-              <div className="flex flex-col">
-                <div>
-                  <span>Khám tim mạch, Khám mắt...</span>
-                </div>
-                <div className="underline text-blueSer">
-                  <a href="q">Xem thêm</a>
-                </div>
-              </div>
-            </td>
-            <td className="underline text-blueSer">
-              <a href="q">Chi tiết</a>
-            </td>
-            <td className="underline text-blueSer">
-              <a href="q">Cập nhật</a>
-            </td>
-          </tr>
-          <tr>
-            <td>KIO_01</td>
-            <td>Kiosk</td>
-            <td>192.168.1.10</td>
-            <td>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-red"></div>
-                <span>Ngưng hoạt động</span>
-              </div>
-            </td>
-            <td>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-red"></div>
-                <span>Mất kết nối</span>
-              </div>
-            </td>
-            <td>
-              <div className="flex flex-col">
-                <div>
-                  <span>Khám tim mạch, Khám mắt...</span>
-                </div>
-                <div className="underline text-blueSer">
-                  <a href="q">Xem thêm</a>
-                </div>
-              </div>
-            </td>
-            <td className="underline text-blueSer">
-              <a href="q">Chi tiết</a>
-            </td>
-            <td className="underline text-blueSer">
-              <a href="q">Cập nhật</a>
-            </td>
-          </tr>
-          <tr>
-            <td>KIO_01</td>
-            <td>Kiosk</td>
-            <td>192.168.1.10</td>
-            <td>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-colorGreen"></div>
-                <span>Hoạt động</span>
-              </div>
-            </td>
-            <td>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-colorGreen"></div>
-                <span>Kết nối</span>
-              </div>
-            </td>
-            <td>
-              <div className="flex flex-col">
-                <div>
-                  <span>Khám tim mạch, Khám mắt...</span>
-                </div>
-                <div className="underline text-blueSer">
-                  <a href="q">Xem thêm</a>
-                </div>
-              </div>
-            </td>
-            <td className="underline text-blueSer">
-              <a href="q">Chi tiết</a>
-            </td>
-            <td className="underline text-blueSer">
-              <a href="q">Cập nhật</a>
-            </td>
-          </tr>
-          <tr>
-            <td>KIO_01</td>
-            <td>Kiosk</td>
-            <td>192.168.1.10</td>
-            <td>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-red"></div>
-                <span>Ngưng hoạt động</span>
-              </div>
-            </td>
-            <td>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-red"></div>
-                <span>Mất kết nối</span>
-              </div>
-            </td>
-            <td>
-              <div className="flex flex-col">
-                <div>
-                  <span>Khám tim mạch, Khám mắt...</span>
-                </div>
-                <div className="underline text-blueSer">
-                  <a href="q">Xem thêm</a>
-                </div>
-              </div>
-            </td>
-            <td className="underline text-blueSer">
-              <a href="q">Chi tiết</a>
-            </td>
-            <td className="underline text-blueSer">
-              <a href="q">Cập nhật</a>
-            </td>
-          </tr>
+          {serviceList.length > 0 &&
+            serviceList.map((item: any) => (
+              <tr key={item.id}>
+                <td>{item?.idservice}</td>
+                <td>{item?.name}</td>
+                <td>{item?.describe}</td>
+                <td>
+                  <div className="flex items-center gap-1">
+                    <div className="w-2 h-2 rounded-full bg-red"></div>
+                    <span>Ngưng hoạt động</span>
+                  </div>
+                </td>
+                <td className="underline cursor-pointer text-blueSer">
+                  <span
+                    onClick={() => navigate(`/detailservice?id=${item.id}`)}
+                  >
+                    Chi tiết
+                  </span>
+                </td>
+                <td className="underline cursor-pointer text-blueSer">
+                  <span
+                    onClick={() => navigate(`/updateservice?id=${item.id}`)}
+                  >
+                    Cập nhật
+                  </span>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

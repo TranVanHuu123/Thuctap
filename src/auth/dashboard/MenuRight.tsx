@@ -8,7 +8,7 @@ type Props = {};
 
 const MenuRight = (props: Props) => {
   return (
-    <div className="absolute w-full max-w-[401px] bg-white top-0 right-0 min-h-screen rounded-md shadow-md">
+    <div className="absolute w-full max-w-[401px]  bg-white top-0 right-0 min-h-[940px] rounded-md shadow-md">
       <div className="mt-[24px] ml-6">
         <Avatar></Avatar>
       </div>

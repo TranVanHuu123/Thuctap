@@ -3,6 +3,7 @@ import PageDevice from "../../../components/titleDevicePage/PageDevice";
 import Avatar from "../../user/Avatar";
 import ServiceInformation from "../addService/ServiceInformation";
 import Frame from "../../frame/Frame";
+import ServiceUpdateInformation from "./ServiceUpdateInformation";
 
 type Props = {};
 
@@ -27,7 +28,7 @@ const UpdateServiceMain = (props: Props) => {
       <span className="text-[24px] left-9 text-orange font-bold inline-block mb-[16px]">
         Quản lý dịch vụ
       </span>
-      <ServiceInformation></ServiceInformation>
+      <ServiceUpdateInformation></ServiceUpdateInformation>
     </Frame>
   );
 };

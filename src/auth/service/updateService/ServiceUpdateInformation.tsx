@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CustomInput from "../../../components/input/CustomInput";
 import CustomButtonDevice from "../../../components/button/CustomButtonDevice";
 import RuleRecive from "../../../components/rule/RuleRecive";
@@ -6,13 +6,22 @@ import Label from "../../../components/label/Label";
 import Input from "../../../components/input/Input";
 import { useForm } from "react-hook-form";
 import CustomButton from "../../../components/button/CustomButton";
-import { addDoc, collection, query, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  query,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../../firebase-app/Firebase-config";
 import { toast } from "react-toastify";
+import { useSearchParams } from "react-router-dom";
 
 type Props = {};
 
-const ServiceInformation = (props: Props) => {
+const ServiceUpdateInformation = (props: Props) => {
   const {
     register,
     handleSubmit,
@@ -23,29 +32,40 @@ const ServiceInformation = (props: Props) => {
     formState: { isValid, errors },
   } = useForm({
     mode: "onChange",
-    defaultValues: {
-      idservice: "",
-      name: "",
-      describe: "",
-    },
   });
+  const [devicetype, setDevicetype] = useState<any>([]);
 
-  const handleAddService = async (values: any) => {
-    const cloneValues = { ...values };
-    const colRef = collection(db, "service");
-    await addDoc(colRef, {
-      ...cloneValues,
-      createdAt: serverTimestamp(),
-    });
-    toast.success("Create new post successfully!");
-    reset({
-      idservice: "",
-      name: "",
-      describe: "",
-    });
+  const [params] = useSearchParams();
+  const serviceId = params.get("id");
+  useEffect(() => {
+    async function fetchData() {
+      if (!serviceId) return null;
+      const docRef = doc(db, "service", serviceId);
+      const docSnapshot = await getDoc(docRef);
+      if (docSnapshot.data()) {
+        reset(docSnapshot.data());
+      }
+    }
+    fetchData();
+  }, [serviceId, reset]);
+  const handleUpdateService = async (values: any) => {
+    if (!serviceId) return null;
+    if (!isValid) return;
+    // if (userInfo?.role !== userRole.ADMIN) {
+    //   Swal.fire("Failed", "You have no right to do this action", "warning");
+    //   return;
+    // }
+    try {
+      const docRef = doc(db, "service", serviceId);
+      await updateDoc(docRef, { ...values });
+      toast.success("Update user information successfully!");
+    } catch (error) {
+      console.log(error);
+      toast.error("Update user failed!");
+    }
   };
   return (
-    <form onSubmit={handleSubmit(handleAddService)}>
+    <form onSubmit={handleSubmit(handleUpdateService)}>
       <div className="max-w-[1152px] w-full ">
         <div className="w-full bg-white min-h-[550px] h-full rounded-lg">
           <div className="px-6 pt-4">
@@ -131,7 +151,7 @@ const ServiceInformation = (props: Props) => {
             className="max-w-[180px]  w-full h-[48px] text-[16px] leading-[22px] pt-3 pb-3 pl-6 pr-6 "
             text=""
             bg=""
-            name="Thêm dịch vụ"
+            name="Cập nhật"
           ></CustomButton>
         </div>
       </div>
@@ -139,4 +159,4 @@ const ServiceInformation = (props: Props) => {
   );
 };
 
-export default ServiceInformation;
+export default ServiceUpdateInformation;

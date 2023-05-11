@@ -28,15 +28,13 @@ import UpdateAccount from "./modules/account/UpdateAccount";
 import SignUpPage from "./modules/form/SignUpPage";
 import { AuthProvider } from "./context/Auth-context";
 import SignInPage from "./modules/form/SignInPage";
+import Menu from "./auth/menu/Menu";
+import Menubar from "./auth/user/Menubar";
+import DetailDeviceHeader from "./auth/device/detailDevice/DetailDeviceHeader";
 
 function App() {
   return (
     <div className="App">
-      {/* <SignUpPage></SignUpPage> */}
-      {/* <Forgotpassword></Forgotpassword> */}
-      {/* <ResetPassword></ResetPassword> */}
-      {/* <TabBarMain></TabBarMain> */}
-      {/* <Dashboard></Dashboard> */}
       {/* <Device></Device> */}
       {/* <AddDevice></AddDevice> */}
       {/* <DetailDevice></DetailDevice> */}
@@ -52,16 +50,42 @@ function App() {
         <Routes>
           <Route path="/" element={<SignInPage></SignInPage>}></Route>
           <Route
+            path="/forgotpassword"
+            element={<Forgotpassword></Forgotpassword>}
+          ></Route>
+          <Route
             path="/resetpassword"
             element={<ResetPassword></ResetPassword>}
           ></Route>
+
           <Route path="/tabbarmain" element={<TabBarMain></TabBarMain>}></Route>
-          <Route element={<Main></Main>}>
+          <Route path="/" element={<Menubar></Menubar>}>
             <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
             <Route path="/device" element={<Device></Device>}></Route>
+            <Route path="/adddevice" element={<AddDevice></AddDevice>}></Route>
+            <Route
+              path="/updatedevice"
+              element={<UpdateDvice></UpdateDvice>}
+            ></Route>
+            <Route
+              path="/detaildevice"
+              element={<DetailDeviceHeader></DetailDeviceHeader>}
+            ></Route>
             <Route
               path="/service"
               element={<ServiceList></ServiceList>}
+            ></Route>
+            <Route
+              path="/addservice"
+              element={<AddService></AddService>}
+            ></Route>
+            <Route
+              path="/detailservice"
+              element={<DetailService></DetailService>}
+            ></Route>
+            <Route
+              path="/updateservice"
+              element={<UpdateService></UpdateService>}
             ></Route>
             <Route
               path="/progression"

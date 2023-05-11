@@ -1,34 +1,60 @@
-import React from "react";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { db } from "../../firebase-app/Firebase-config";
 
 type Props = {
   title: string;
 };
 
 const CustomdropdownDevice = ({ ...props }: Props) => {
+  const [categories, setCategories] = useState<any>([]);
+
+  useEffect(() => {
+    async function getData() {
+      const colRef = collection(db, "devicetype");
+      const q = query(colRef, where("status", "==", 1));
+      const querySnapshot = await getDocs(q);
+      let result: any[] = [];
+      querySnapshot.forEach((doc) => {
+        result.push({
+          id: doc.id,
+          ...doc.data(),
+        });
+      });
+      setCategories(result);
+    }
+    getData();
+  }, []);
+  // const handleClickOption = async (item : any) => {
+  //   const colRef = doc(db, "categories", item.id);
+  //   const docData = await getDoc(colRef);
+  //   setValue("category", {
+  //     id: docData.id,
+  //     ...docData.data(),
+  //   });
+  //   setSelectCategory(item);
+  // };
   return (
     <div className="mb-[17px] mt-[3px]">
-      <label className="">{props.title}</label>
-      {/* <div className="mt-1 ">
-        <select className=" select p-[11px]  w-[300px] outline-none border border-gray rounded-lg">
-          <option value="all">Tất cả</option>
+      <div className="flex flex-col gap-y-[3px]">
+        <label className="text-[16px] leading-6 font-semibold">
+          {props.title}
+        </label>
+        <select className="p-[9px] border rounded-lg border-gray">
+          {categories.length > 0 &&
+            categories.map((item: any) => (
+              <option key={item.id} value="Kiosk">
+                {item.name}
+              </option>
+            ))}
         </select>
-      </div> */}
-      <div className="relative w-[540px] h-11  border border-gray rounded-lg bg-white cursor-pointer">
-        <div className="flex items-center justify-between w-full px-4 py-[10px] ">
-          <span className="text-[16px] leading-4 font-thin text-colorPl ">
-            Chọn loại thiết bị
-          </span>
-          <span>
-            <img srcSet="./fi_chevron-down.png 2x" alt="down" />
-          </span>
-        </div>
-        {/* <div className=" option absolute w-full rounded-lg bg-white text-[16px] leading-6 text-gray400text top-[45px]">
-          <ul className="ml-3 ">
-            <li className="py-3 l1">Tất cả</li>
-            <li className="py-3 l2">Hoạt động</li>
-            <li className="py-3 l3">Ngưng hoạt động</li>
-          </ul>
-        </div> */}
       </div>
     </div>
   );

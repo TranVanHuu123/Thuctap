@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Frame from "../../frame/Frame";
 import PageDevice from "../../../components/titleDevicePage/PageDevice";
 import Avatar from "../../user/Avatar";
 import DetalDeciveMain from "./DetalDeciveMain";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../../firebase-app/Firebase-config";
+import { useSearchParams } from "react-router-dom";
+import { useAuth } from "../../../context/Auth-context";
 
 type Props = {};
 
