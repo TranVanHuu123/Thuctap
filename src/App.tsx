@@ -98,11 +98,19 @@ function App() {
             <Route path="/report" element={<Report></Report>}></Route>
             <Route path="/role" element={<Role></Role>}></Route>
             <Route path="/addrole" element={<AddRole></AddRole>}></Route>
+            <Route
+              path="/updaterole"
+              element={<UpdateRole></UpdateRole>}
+            ></Route>
             <Route path="/acount" element={<Acount></Acount>}></Route>
             <Route path="/diary" element={<Diary></Diary>}></Route>
             <Route
               path="/addAccount"
               element={<AddAccount></AddAccount>}
+            ></Route>
+            <Route
+              path="/updateaccount"
+              element={<UpdateAccount></UpdateAccount>}
             ></Route>
           </Route>
         </Routes>

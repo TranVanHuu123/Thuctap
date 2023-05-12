@@ -5,10 +5,43 @@ import Avatar from "../../user/Avatar";
 import AddRoleMainLeft from "./AddRoleMainLeft";
 import AddRoleMainRight from "./AddRoleMainRight";
 import CustomButtonDevice from "../../../components/button/CustomButtonDevice";
+import Input from "../../../components/input/Input";
+import Label from "../../../components/label/Label";
+import CustomButton from "../../../components/button/CustomButton";
+import { useForm } from "react-hook-form";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "../../../firebase-app/Firebase-config";
+import { toast } from "react-toastify";
 
 type Props = {};
 
 const AddRoleMain = (props: Props) => {
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { isValid, errors },
+  } = useForm({
+    mode: "onChange",
+    defaultValues: {
+      name: "",
+      describes: "",
+    },
+  });
+
+  const handleAddRole = async (values: any) => {
+    const cloneValues = { ...values };
+    const colRef = collection(db, "role");
+    await addDoc(colRef, {
+      ...cloneValues,
+      createdAt: serverTimestamp(),
+    });
+    toast.success("Create new post successfully!");
+    reset({
+      name: "",
+      describes: "",
+    });
+  };
   return (
     <Frame>
       <div className="mb-[30px]  w-[1240px]   ">
@@ -29,22 +62,74 @@ const AddRoleMain = (props: Props) => {
         Danh sách vai trò
       </span>
 
-      <div className="max-w-[1192px] w-full ">
-        <div className="w-full bg-white h-[604px] pt-6 rounded-2xl pl-6">
-          <div className="flex gap-x-3">
-            <AddRoleMainLeft></AddRoleMainLeft>
-            <AddRoleMainRight></AddRoleMainRight>
+      <form onSubmit={handleSubmit(handleAddRole)}>
+        <div className="max-w-[1192px] w-full ">
+          <div className="w-full bg-white h-[604px] pt-6 rounded-2xl pl-6">
+            <div className="flex gap-x-3">
+              <div className="max-w-[560px] w-full">
+                <span className="text-[20px] leading-[30px] text-orange font-bold">
+                  Thông tin vai trò
+                </span>
+                <div className="mt-4">
+                  <div className="flex flex-col gap-y-2">
+                    <Label
+                      className="text-[16px] leading-6 font-semibold"
+                      htmlFor="name"
+                    >
+                      Tên vai trò: *
+                    </Label>
+                    <Input
+                      name="name"
+                      placeholder="Nhập tên vai trò"
+                      type="text"
+                      control={control}
+                      className="mb-4 p-2 w-[550px] h-[44px] rounded-lg border-[1px] border-solid border-gray "
+                      autoComplete="off"
+                    >
+                      <span></span>
+                    </Input>
+                  </div>
+                  <div className="flex flex-col gap-y-2">
+                    <Label
+                      className="text-[16px] leading-6 font-semibold"
+                      htmlFor="describes"
+                    >
+                      Mô tả:
+                    </Label>
+                    <Input
+                      name="describes"
+                      placeholder="Nhập mô tả"
+                      type="text"
+                      control={control}
+                      className="mb-4 p-2 w-[550px] h-[44px] rounded-lg border-[1px] border-solid border-gray pb-[130px] pt-4"
+                      autoComplete="off"
+                    >
+                      <span></span>
+                    </Input>
+                  </div>
+
+                  <span>* Là trường thông tin bắt buộc</span>
+                </div>
+              </div>
+              <AddRoleMainRight></AddRoleMainRight>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="flex items-center justify-center gap-8 mt-6">
-        <CustomButtonDevice
-          text="text-orange"
-          bg="bg-redor"
-          name="Hủy bỏ"
-        ></CustomButtonDevice>
-        <CustomButtonDevice text="" bg="" name="Thêm"></CustomButtonDevice>
-      </div>
+        <div className="flex items-center justify-center gap-8 mt-6">
+          <CustomButton
+            text="text-orange"
+            bg="bg-redor"
+            name="Hủy bỏ"
+            className="max-w-[180px]  w-full h-[48px] text-[16px] leading-[22px] pt-3 pb-3 pl-6 pr-6 "
+          ></CustomButton>
+          <CustomButton
+            className="max-w-[180px]  w-full h-[48px] text-[16px] leading-[22px] pt-3 pb-3 pl-6 pr-6 "
+            text=""
+            bg=""
+            name="Thêm "
+          ></CustomButton>
+        </div>
+      </form>
     </Frame>
   );
 };

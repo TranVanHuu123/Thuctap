@@ -16,7 +16,7 @@ const AccountList = (props: Props) => {
         <div className="flex gap-x-4">
           <div className="flex items-center justify-center gap-x-4">
             <span className="text-[20px] leading-[30px] text-gray300 font-bold ">
-              Thiết bị
+              Cài đặt hệ thống
             </span>
             <img
               className="w-[5px] h-[9px]"
@@ -25,14 +25,14 @@ const AccountList = (props: Props) => {
             />
           </div>
           <span className="text-[20px] leading-[30px] text-orange font-bold">
-            Danh sách dịch vụ
+            Quản lý tài khoản
           </span>
         </div>
         <Avatar></Avatar>
       </div>
 
       <span className="text-[24px] left-9 text-orange font-bold inline-block mb-[16px]">
-        Quản lý dịch vụ
+        Danh sách tài khoản
       </span>
 
       <div className="max-w-[1112px] w-full">

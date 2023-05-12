@@ -1,16 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CustomdropdownDevice from "../../../components/dropDown/CustomdropdownDevice";
 import Input from "../../../components/input/Input";
 import Label from "../../../components/label/Label";
 import CustomButton from "../../../components/button/CustomButton";
 import { useForm } from "react-hook-form";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../../firebase-app/Firebase-config";
 import { toast } from "react-toastify";
+import { useSearchParams } from "react-router-dom";
 
 type Props = {};
 
-const AccountInformation = (props: Props) => {
+const AccountUpdateInformation = (props: Props) => {
   const {
     register,
     handleSubmit,
@@ -21,34 +29,38 @@ const AccountInformation = (props: Props) => {
     formState: { isValid, errors },
   } = useForm({
     mode: "onChange",
-    defaultValues: {
-      fullname: "",
-      telephone: "",
-      email: "",
-      nameaccount: "",
-      password: "",
-      againpassword: "",
-    },
   });
-  const handleAddAccount = async (values: any) => {
-    const cloneValues = { ...values };
-    const colRef = collection(db, "account");
-    await addDoc(colRef, {
-      ...cloneValues,
-      createdAt: serverTimestamp(),
-    });
-    toast.success("Create new post successfully!");
-    reset({
-      fullname: "",
-      telephone: "",
-      email: "",
-      nameaccount: "",
-      password: "",
-      againpassword: "",
-    });
+  const [params] = useSearchParams();
+  const accountId = params.get("id");
+  useEffect(() => {
+    async function fetchData() {
+      if (!accountId) return null;
+      const docRef = doc(db, "account", accountId);
+      const docSnapshot = await getDoc(docRef);
+      if (docSnapshot.data()) {
+        reset(docSnapshot.data());
+      }
+    }
+    fetchData();
+  }, [accountId, reset]);
+  const handleUpdateAccount = async (values: any) => {
+    if (!accountId) return null;
+    if (!isValid) return;
+    // if (userInfo?.role !== userRole.ADMIN) {
+    //   Swal.fire("Failed", "You have no right to do this action", "warning");
+    //   return;
+    // }
+    try {
+      const docRef = doc(db, "account", accountId);
+      await updateDoc(docRef, { ...values });
+      toast.success("Update user information successfully!");
+    } catch (error) {
+      console.log(error);
+      toast.error("Update user failed!");
+    }
   };
   return (
-    <form onSubmit={handleSubmit(handleAddAccount)}>
+    <form onSubmit={handleSubmit(handleUpdateAccount)}>
       <div className="max-w-[1152px] w-full ">
         <div className="w-full bg-white min-h-[550px] h-full rounded-lg">
           <div className="px-6 pt-4">
@@ -190,7 +202,7 @@ const AccountInformation = (props: Props) => {
             className="max-w-[180px]  w-full h-[48px] text-[16px] leading-[22px] pt-3 pb-3 pl-6 pr-6 "
             text=""
             bg=""
-            name="Thêm"
+            name="Cập nhật"
           ></CustomButton>
         </div>
       </div>
@@ -198,4 +210,4 @@ const AccountInformation = (props: Props) => {
   );
 };
 
-export default AccountInformation;
+export default AccountUpdateInformation;
