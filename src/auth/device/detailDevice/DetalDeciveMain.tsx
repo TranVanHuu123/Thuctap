@@ -9,6 +9,7 @@ type Props = {};
 const DetalDeciveMain = (props: Props) => {
   const { userInfo } = useAuth();
   const [devicetype, setDevicetype] = useState<any>([]);
+  const [devicetypes, setDevicetypes] = useState<any>([]);
 
   const [params] = useSearchParams();
   const deviceId = params.get("id");
@@ -19,7 +20,12 @@ const DetalDeciveMain = (props: Props) => {
       const docRef = doc(db, "device", deviceId);
       const docSnapshot = await getDoc(docRef);
       setDevicetype(docSnapshot.data());
+
+      const devicedocRef = doc(db, "devicetype", deviceId);
+      const devicedocSnapshot = await getDoc(devicedocRef);
+      setDevicetypes(devicedocSnapshot.data());
     }
+
     fetchData();
   }, [deviceId]);
   return (

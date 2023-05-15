@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import CustomInput from "../../../components/input/CustomInput";
-import CustomButtonDevice from "../../../components/button/CustomButtonDevice";
 import RuleRecive from "../../../components/rule/RuleRecive";
 import Label from "../../../components/label/Label";
 import Input from "../../../components/input/Input";

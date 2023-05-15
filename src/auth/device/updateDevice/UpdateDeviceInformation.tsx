@@ -19,6 +19,7 @@ import Input from "../../../components/input/Input";
 import CustomButton from "../../../components/button/CustomButton";
 import { db } from "../../../firebase-app/Firebase-config";
 import { toast } from "react-toastify";
+import { Dropdown } from "../../../components/dropDown";
 
 type Props = {};
 
@@ -153,17 +154,23 @@ const UpdateDeviceInformation = (props: Props) => {
                     <label className="text-[16px] leading-6 font-semibold">
                       Loại thiết bị: *
                     </label>
-                    <select className="p-[9px] border rounded-lg border-gray">
-                      {devicetype.length > 0 &&
-                        devicetype.map((item: any) => (
-                          <option
-                            key={item.id}
-                            onClick={() => setValue("devicetypeId", item.id)}
-                          >
-                            {item.name}
-                          </option>
-                        ))}
-                    </select>
+                    <Dropdown>
+                      <Dropdown.Select
+                        className=""
+                        placeholder="Chọn loại thiết bị"
+                      ></Dropdown.Select>
+                      <Dropdown.List>
+                        {devicetype.length > 0 &&
+                          devicetype.map((item: any) => (
+                            <Dropdown.Option
+                              key={item.id}
+                              onClick={() => setValue("devicetypeId", item.id)}
+                            >
+                              {item.name}
+                            </Dropdown.Option>
+                          ))}
+                      </Dropdown.List>
+                    </Dropdown>
                   </div>
                 </div>
                 <div className="flex flex-col gap-y-2">

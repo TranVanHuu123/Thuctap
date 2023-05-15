@@ -35,17 +35,6 @@ import DetailDeviceHeader from "./auth/device/detailDevice/DetailDeviceHeader";
 function App() {
   return (
     <div className="App">
-      {/* <Device></Device> */}
-      {/* <AddDevice></AddDevice> */}
-      {/* <DetailDevice></DetailDevice> */}
-      {/* <UpdateDvice></UpdateDvice> */}
-      {/* <ServiceList></ServiceList> */}
-      {/* <AddService></AddService> */}
-      {/* <DetailService></DetailService> */}
-      {/* <UpdateService></UpdateService> */}
-      {/* <DetailProgression></DetailProgression> */}
-      {/* <UpdateRole></UpdateRole> */}
-      {/* <UpdateAccount></UpdateAccount> */}
       <AuthProvider>
         <Routes>
           <Route path="/" element={<SignInPage></SignInPage>}></Route>

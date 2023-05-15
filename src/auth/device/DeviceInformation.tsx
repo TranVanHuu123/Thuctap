@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CustomInput from "../../components/input/CustomInput";
 import CustomButton from "../../components/button/CustomButton";
-import CustomButtonDevice from "../../components/button/CustomButtonDevice";
-import CustomdropdownDevice from "../../components/dropDown/CustomdropdownDevice";
-import Dropdown from "../../components/dropDown/Dropdown";
 import Input from "../../components/input/Input";
 import Label from "../../components/label/Label";
 import { useForm } from "react-hook-form";
@@ -18,6 +14,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../../firebase-app/Firebase-config";
+import { Dropdown } from "../../components/dropDown";
 
 type Props = {};
 
@@ -40,11 +37,11 @@ const DeviceInformation = (props: Props) => {
       nameaccount: "",
       password: "",
       devicetypeId: "",
-      // devicetypes: {},
     },
   });
   const [devicetype, setDevicetype] = useState<any>([]);
   const [selectDevicetype, setSelectDevicetype] = useState("");
+  console.log(selectDevicetype);
 
   useEffect(() => {
     async function getData() {
@@ -78,8 +75,6 @@ const DeviceInformation = (props: Props) => {
       nameaccount: "",
       password: "",
       ipaddress: "",
-
-      // devicetypes: {},
     });
   };
   // const handleClickOption = async (item: any) => {
@@ -89,6 +84,7 @@ const DeviceInformation = (props: Props) => {
   //     id: docData.id,
   //     ...docData.data(),
   //   });
+
   //   setSelectDevicetype(item);
   // };
   return (
@@ -162,17 +158,34 @@ const DeviceInformation = (props: Props) => {
                     <label className="text-[16px] leading-6 font-semibold">
                       Loại thiết bị: *
                     </label>
-                    <select className="p-[9px] border rounded-lg border-gray">
+                    <Dropdown>
+                      <Dropdown.Select
+                        className=""
+                        placeholder="Chọn loại thiết bị"
+                      ></Dropdown.Select>
+                      <Dropdown.List>
+                        {devicetype.length > 0 &&
+                          devicetype.map((item: any) => (
+                            <Dropdown.Option
+                              key={item.id}
+                              onClick={() => setValue("devicetypeId", item.id)}
+                            >
+                              {item.name}
+                            </Dropdown.Option>
+                          ))}
+                      </Dropdown.List>
+                    </Dropdown>
+                    {/* <select className="p-[9px] border rounded-lg border-gray">
                       {devicetype.length > 0 &&
                         devicetype.map((item: any) => (
                           <option
                             key={item.id}
-                            onClick={() => setValue("devicetypeId", item.id)}
+                            onClick={() => handleClickOption(item)}
                           >
                             {item.name}
                           </option>
                         ))}
-                    </select>
+                    </select> */}
                   </div>
                 </div>
                 <div className="flex flex-col gap-y-2">

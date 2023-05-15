@@ -34,15 +34,8 @@ const RoleMain = (props: Props) => {
         Danh sách vai trò
       </span>
 
-      <div className="max-w-[1112px] w-full">
-        <div className="flex items-center justify-between">
-          <div className="flex gap-x-6"></div>
-          <div className="mt-[-15px]">
-            <CustomInputSearchService></CustomInputSearchService>
-          </div>
-        </div>
-        <TableRole></TableRole>
-      </div>
+      <TableRole></TableRole>
+
       <NextPage></NextPage>
     </Frame>
   );

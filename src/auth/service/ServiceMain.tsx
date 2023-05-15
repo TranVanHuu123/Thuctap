@@ -38,32 +38,8 @@ const ServiceMain = (props: Props) => {
         Quản lý dịch vụ
       </span>
 
-      <div className="max-w-[1112px] w-full">
-        <div className="flex items-center justify-between">
-          <div className="flex gap-x-6">
-            <Customdropdown title="Trạng thái hoạt động"></Customdropdown>
-            <div className="flex items-center justify-center gap-4">
-              <InputTime
-                className="w-[150px]"
-                title="Chọn thời gian"
-              ></InputTime>
-              <img
-                className="w-[5px] h-[5px]"
-                src="/Vector154.png"
-                alt="Vector"
-              />
-              <InputTime
-                className="w-[150px]"
-                title="Chọn thời gian"
-              ></InputTime>
-            </div>
-          </div>
-          <div className="mt-[-15px]">
-            <CustomInputSearch></CustomInputSearch>
-          </div>
-        </div>
-        <TableService></TableService>
-      </div>
+      <TableService></TableService>
+
       <NextPage></NextPage>
     </Frame>
   );

@@ -35,16 +35,8 @@ const AccountList = (props: Props) => {
         Danh sách tài khoản
       </span>
 
-      <div className="max-w-[1112px] w-full">
-        <div className="flex items-center justify-between">
-          <Customdropdown title="Tên vai trò"></Customdropdown>
+      <TableAccount></TableAccount>
 
-          <div className="mt-[-15px]">
-            <CustomInputSearch></CustomInputSearch>
-          </div>
-        </div>
-        <TableAccount></TableAccount>
-      </div>
       <NextPage></NextPage>
     </Frame>
   );

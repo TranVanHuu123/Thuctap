@@ -4,7 +4,6 @@ import PageDevice from "../../../components/titleDevicePage/PageDevice";
 import Avatar from "../../user/Avatar";
 import AddRoleMainLeft from "./AddRoleMainLeft";
 import AddRoleMainRight from "./AddRoleMainRight";
-import CustomButtonDevice from "../../../components/button/CustomButtonDevice";
 import CustomButton from "../../../components/button/CustomButton";
 import Label from "../../../components/label/Label";
 import Input from "../../../components/input/Input";

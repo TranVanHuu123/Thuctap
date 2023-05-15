@@ -36,18 +36,8 @@ const DeviceMain = (props: Props) => {
         Danh sách thiết bị
       </span>
 
-      <div className="max-w-[1112px] w-full">
-        <div className="flex items-center justify-between">
-          <div className="flex gap-x-6">
-            <Customdropdown title="Trạng thái hoạt động"></Customdropdown>
-            <Customdropdown title="Trạng thái kết nối"></Customdropdown>
-          </div>
-          <div className="mt-[-15px]">
-            <CustomInputSearch></CustomInputSearch>
-          </div>
-        </div>
-        <Table></Table>
-      </div>
+      <Table></Table>
+
       <NextPage></NextPage>
     </Frame>
   );

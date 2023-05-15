@@ -3,7 +3,7 @@ import Frame from "../frame/Frame";
 import Avatar from "../user/Avatar";
 import PageDevice from "../../components/titleDevicePage/PageDevice";
 import DropdownNewPro from "../../components/dropDown/DropdownNewPro";
-import CustomButtonDevice from "../../components/button/CustomButtonDevice";
+import CustomButton from "../../components/button/CustomButton";
 
 type Props = {};
 
@@ -36,16 +36,18 @@ const New = (props: Props) => {
             </h1>
             <DropdownNewPro title="Dịch vụ khách hàng lựa chọn"></DropdownNewPro>
             <div className="flex items-center justify-center gap-8 mt-6">
-              <CustomButtonDevice
+              <CustomButton
                 text="text-orange"
                 bg="bg-redor"
                 name="Hủy bỏ"
-              ></CustomButtonDevice>
-              <CustomButtonDevice
+                className="max-w-[180px]  w-full h-[48px] text-[16px] leading-[22px] pt-3 pb-3 pl-6 pr-6 "
+              ></CustomButton>
+              <CustomButton
+                className="max-w-[180px]  w-full h-[48px] text-[16px] leading-[22px] pt-3 pb-3 pl-6 pr-6 "
                 text=""
                 bg=""
-                name="In số"
-              ></CustomButtonDevice>
+                name="Thêm"
+              ></CustomButton>
             </div>
           </div>
         </div>
