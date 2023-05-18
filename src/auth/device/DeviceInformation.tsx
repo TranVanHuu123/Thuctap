@@ -36,12 +36,11 @@ const DeviceInformation = (props: Props) => {
       dichvu: "",
       nameaccount: "",
       password: "",
-      devicetypeId: "",
+      devicetypes: {},
     },
   });
   const [devicetype, setDevicetype] = useState<any>([]);
   const [selectDevicetype, setSelectDevicetype] = useState("");
-  console.log(selectDevicetype);
 
   useEffect(() => {
     async function getData() {
@@ -77,16 +76,16 @@ const DeviceInformation = (props: Props) => {
       ipaddress: "",
     });
   };
-  // const handleClickOption = async (item: any) => {
-  //   const colRef = doc(db, "devicetype", item.id);
-  //   const docData = await getDoc(colRef);
-  //   setValue("devicetypes", {
-  //     id: docData.id,
-  //     ...docData.data(),
-  //   });
+  const handleClickOption = async (item: any) => {
+    const colRef = doc(db, "devicetype", item.id);
+    const docData = await getDoc(colRef);
+    setValue("devicetypes", {
+      id: docData.id,
+      ...docData.data(),
+    });
 
-  //   setSelectDevicetype(item);
-  // };
+    setSelectDevicetype(item);
+  };
   return (
     <form onSubmit={handleSubmit(handleAddDevice)}>
       <div className="max-w-[1152px] w-full ">
@@ -167,8 +166,9 @@ const DeviceInformation = (props: Props) => {
                         {devicetype.length > 0 &&
                           devicetype.map((item: any) => (
                             <Dropdown.Option
+                              value=""
                               key={item.id}
-                              onClick={() => setValue("devicetypeId", item.id)}
+                              onClick={() => handleClickOption(item)}
                             >
                               {item.name}
                             </Dropdown.Option>

@@ -25,7 +25,7 @@ const AddAccountMain = (props: Props) => {
         </div>
       </div>
       <span className="text-[24px] left-9 text-orange font-bold inline-block mb-[16px]">
-        Quản lý thiết bị
+        Quản lý tài khoản
       </span>
       <AccountInformation></AccountInformation>
     </Frame>

@@ -55,7 +55,7 @@ const DetalDeciveMain = (props: Props) => {
                 <span>Mật khẩu:</span>
               </div>
               <div className="flex flex-col gap-y-4 text-[16px] leading-6  text-gray400text">
-                <span>Kiosk</span>
+                <span>{devicetype?.devicetypes?.name}</span>
                 <span>{devicetype?.nameaccount}</span>
                 <span>{devicetype?.password}</span>
               </div>

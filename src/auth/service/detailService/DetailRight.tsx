@@ -1,5 +1,5 @@
 import React from "react";
-import CustomdropdownService from "../../../components/dropDown/CustomdropdownService";
+
 import InputTime from "../../../components/input/InputTime";
 import CustomInputSearchService from "../../../components/input/CustomInputSearchService";
 import TableRightService from "../../../components/table/TableRightService";
@@ -11,7 +11,7 @@ const DetailRight = (props: Props) => {
   return (
     <div className="max-w-[718px] w-full min-h-[606px] h-full rounded-xl bg-white pt-4 pl-4 pr-4">
       <div className="flex gap-2">
-        <CustomdropdownService title="Trạng thái"></CustomdropdownService>
+        {/* <CustomdropdownService title="Trạng thái"></CustomdropdownService> */}
         <div className="flex items-center gap-5">
           <InputTime className="w-[130px]" title="Chọn thời gian"></InputTime>
           <img className="w-[5px] h-[5px]" src="/Vector154.png" alt="Vector" />

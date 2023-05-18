@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CustomdropdownDevice from "../../../components/dropDown/CustomdropdownDevice";
 import Input from "../../../components/input/Input";
 import Label from "../../../components/label/Label";
@@ -9,16 +9,23 @@ import {
   collection,
   doc,
   getDoc,
+  getDocs,
   serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../../firebase-app/Firebase-config";
 import { toast } from "react-toastify";
 import { useSearchParams } from "react-router-dom";
+import { Dropdown } from "../../../components/dropDown";
 
 type Props = {};
 
 const AccountUpdateInformation = (props: Props) => {
+  const [roleType, setRoletype] = useState<any>([]);
+  const [statusType, setStatustype] = useState<any>([]);
+
+  const [selectRoleType, setSelectRoleType] = useState("");
+  const [selectStatusType, setSelectStatusType] = useState("");
   const {
     register,
     handleSubmit,
@@ -46,10 +53,6 @@ const AccountUpdateInformation = (props: Props) => {
   const handleUpdateAccount = async (values: any) => {
     if (!accountId) return null;
     if (!isValid) return;
-    // if (userInfo?.role !== userRole.ADMIN) {
-    //   Swal.fire("Failed", "You have no right to do this action", "warning");
-    //   return;
-    // }
     try {
       const docRef = doc(db, "account", accountId);
       await updateDoc(docRef, { ...values });
@@ -58,6 +61,57 @@ const AccountUpdateInformation = (props: Props) => {
       console.log(error);
       toast.error("Update user failed!");
     }
+  };
+  useEffect(() => {
+    async function getData() {
+      const colRef = collection(db, "status");
+      const querySnapshot = await getDocs(colRef);
+      let result: any[] = [];
+      querySnapshot.forEach((doc) => {
+        result.push({
+          id: doc.id,
+          ...doc.data(),
+        });
+      });
+
+      setStatustype(result);
+    }
+    getData();
+  }, []);
+  useEffect(() => {
+    async function getData() {
+      const colRef = collection(db, "role");
+      const querySnapshot = await getDocs(colRef);
+      let result: any[] = [];
+      querySnapshot.forEach((doc) => {
+        result.push({
+          id: doc.id,
+          ...doc.data(),
+        });
+      });
+
+      setRoletype(result);
+    }
+    getData();
+  }, []);
+  const handleClickOption = async (item: any) => {
+    const colRef = doc(db, "role", item.id);
+    const docData = await getDoc(colRef);
+    setValue("roles", {
+      id: docData.id,
+      ...docData.data(),
+    });
+
+    setSelectRoleType(item);
+  };
+  const handleClickOptionStatus = async (item: any) => {
+    const colRef = doc(db, "status", item.id);
+    const docData = await getDoc(colRef);
+    setValue("listStatus", {
+      id: docData.id,
+      ...docData.data(),
+    });
+    setSelectStatusType(item);
   };
   return (
     <form onSubmit={handleSubmit(handleUpdateAccount)}>
@@ -124,7 +178,29 @@ const AccountUpdateInformation = (props: Props) => {
                   </Input>
                 </div>
 
-                <CustomdropdownDevice title="Vai trò: *"></CustomdropdownDevice>
+                <div className="flex flex-col gap-y-[3px]">
+                  <label className="text-[16px] leading-6 font-semibold">
+                    Vai trò: *
+                  </label>
+                  <Dropdown>
+                    <Dropdown.Select
+                      className=""
+                      placeholder="Chọn vai trò"
+                    ></Dropdown.Select>
+                    <Dropdown.List>
+                      {roleType.length > 0 &&
+                        roleType.map((item: any) => (
+                          <Dropdown.Option
+                            value=""
+                            key={item.id}
+                            onClick={() => handleClickOption(item)}
+                          >
+                            {item.name}
+                          </Dropdown.Option>
+                        ))}
+                    </Dropdown.List>
+                  </Dropdown>
+                </div>
               </div>
               <div className="mt-[20px] flex-1">
                 <div className="flex flex-col gap-y-2">
@@ -182,7 +258,29 @@ const AccountUpdateInformation = (props: Props) => {
                   </Input>
                 </div>
 
-                <CustomdropdownDevice title="Tình trạng: *"></CustomdropdownDevice>
+                <div className="flex flex-col gap-y-[3px]">
+                  <label className="text-[16px] leading-6 font-semibold">
+                    Tình trạng: *
+                  </label>
+                  <Dropdown>
+                    <Dropdown.Select
+                      className=""
+                      placeholder="Hoạt động"
+                    ></Dropdown.Select>
+                    <Dropdown.List>
+                      {statusType.length > 0 &&
+                        statusType.map((item: any) => (
+                          <Dropdown.Option
+                            value=""
+                            key={item.id}
+                            onClick={() => handleClickOptionStatus(item)}
+                          >
+                            {item.name}
+                          </Dropdown.Option>
+                        ))}
+                    </Dropdown.List>
+                  </Dropdown>
+                </div>
               </div>
             </div>
 

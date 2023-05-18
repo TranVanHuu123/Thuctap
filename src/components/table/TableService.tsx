@@ -6,6 +6,7 @@ import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../firebase-app/Firebase-config";
 import InputTime from "../input/InputTime";
 import Customdropdown from "../dropDown/Customdropdown";
+import { Dropdown } from "../dropDown";
 
 type Props = {};
 
@@ -13,6 +14,7 @@ const TableService = (props: Props) => {
   const [serviceList, setServiceList] = useState<any>([]);
   const navigate = useNavigate();
   const [filter, setFilter] = useState("");
+  const [dropdown, setDropdown] = useState("");
 
   useEffect(() => {
     const colRef = collection(db, "service");
@@ -30,11 +32,61 @@ const TableService = (props: Props) => {
       setServiceList(results);
     });
   }, [filter]);
+
+  useEffect(() => {
+    const colRef = collection(db, "service");
+    const newRef = dropdown
+      ? query(colRef, where("status", "==", dropdown))
+      : colRef;
+    onSnapshot(newRef, (snapshot) => {
+      const results: any[] = [];
+      snapshot.forEach((doc) => {
+        results.push({
+          id: doc.id,
+          ...doc.data(),
+        });
+      });
+      setServiceList(results);
+    });
+  }, [dropdown]);
+  const handleDropdownClick = (value: any) => {
+    setDropdown(value);
+  };
   return (
     <div className="max-w-[1112px] w-full">
       <div className="flex items-center justify-between">
         <div className="flex gap-x-6">
-          <Customdropdown title="Trạng thái hoạt động"></Customdropdown>
+          <div className="mb-2 mr-[-140px]">
+            <span className="text-[16px] leading-6 text-gray500 font-semibold">
+              Trạng thái hoạt động
+            </span>
+            <Dropdown>
+              <Dropdown.Select
+                className="w-[300px]"
+                placeholder={dropdown || "Tất cả"}
+              ></Dropdown.Select>
+              <Dropdown.List>
+                <Dropdown.Option
+                  value=""
+                  onClick={() => handleDropdownClick("")}
+                >
+                  Tất cả
+                </Dropdown.Option>
+                <Dropdown.Option
+                  value="Hoạt động"
+                  onClick={() => handleDropdownClick("Hoạt động")}
+                >
+                  Hoạt động
+                </Dropdown.Option>
+                <Dropdown.Option
+                  value="Ngưng hoạt động"
+                  onClick={() => handleDropdownClick("Ngưng hoạt động")}
+                >
+                  Ngưng hoạt động
+                </Dropdown.Option>
+              </Dropdown.List>
+            </Dropdown>
+          </div>
           <div className="flex items-center justify-center gap-4">
             <InputTime className="w-[150px]" title="Chọn thời gian"></InputTime>
             <img
@@ -86,8 +138,14 @@ const TableService = (props: Props) => {
                   <td>{item?.describe}</td>
                   <td>
                     <div className="flex items-center gap-1">
-                      <div className="w-2 h-2 rounded-full bg-red"></div>
-                      <span>Ngưng hoạt động</span>
+                      <div
+                        className={`w-2 h-2 rounded-full ${
+                          item?.status === "Hoạt động"
+                            ? "bg-green-500"
+                            : "bg-red"
+                        } `}
+                      ></div>
+                      <span>{item?.status}</span>
                     </div>
                   </td>
                   <td className="underline cursor-pointer text-blueSer">

@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../firebase-app/Firebase-config";
 import Customdropdown from "../dropDown/Customdropdown";
+import { Dropdown } from "../dropDown";
 
 type Props = {};
 
@@ -11,6 +12,18 @@ const Table = (props: Props) => {
   const [userList, setUserList] = useState<any>([]);
   const navigate = useNavigate();
   const [filter, setFilter] = useState("");
+  const [dropdown, setDropdown] = useState("");
+  const [connection, setConnection] = useState("");
+  const [showFullContent, setShowFullContent] = useState<{
+    [id: string]: boolean;
+  }>({});
+
+  const handleToggleContent = (id: string) => {
+    setShowFullContent((prevState) => ({
+      ...prevState,
+      [id]: !prevState[id],
+    }));
+  };
 
   useEffect(() => {
     const colRef = collection(db, "device");
@@ -28,12 +41,112 @@ const Table = (props: Props) => {
       setUserList(results);
     });
   }, [filter]);
+
+  useEffect(() => {
+    const colRef = collection(db, "device");
+    const newRef = dropdown
+      ? query(colRef, where("status", "==", dropdown))
+      : colRef;
+    onSnapshot(newRef, (snapshot) => {
+      const results: any[] = [];
+      snapshot.forEach((doc) => {
+        results.push({
+          id: doc.id,
+          ...doc.data(),
+        });
+      });
+      setUserList(results);
+    });
+  }, [dropdown]);
+
+  useEffect(() => {
+    const colRef = collection(db, "device");
+    const newRef = connection
+      ? query(colRef, where("connection", "==", connection))
+      : colRef;
+    onSnapshot(newRef, (snapshot) => {
+      const results: any[] = [];
+      snapshot.forEach((doc) => {
+        results.push({
+          id: doc.id,
+          ...doc.data(),
+        });
+      });
+      setUserList(results);
+    });
+  }, [connection]);
+  const handleDropdownClick = (value: any) => {
+    setDropdown(value);
+  };
+  const handleConnectClick = (value: any) => {
+    setConnection(value);
+  };
   return (
     <div className="max-w-[1112px] w-full">
       <div className="flex items-center justify-between">
-        <div className="flex gap-x-6">
-          <Customdropdown title="Trạng thái hoạt động"></Customdropdown>
-          <Customdropdown title="Trạng thái kết nối"></Customdropdown>
+        <div className="flex ">
+          <div className="mb-2 mr-[-140px]">
+            <span className="text-[16px] leading-6 text-gray500 font-semibold">
+              Trạng thái hoạt động
+            </span>
+            <Dropdown>
+              <Dropdown.Select
+                className="w-[300px]"
+                placeholder={dropdown || "Tất cả"}
+              ></Dropdown.Select>
+              <Dropdown.List>
+                <Dropdown.Option
+                  value=""
+                  onClick={() => handleDropdownClick("")}
+                >
+                  Tất cả
+                </Dropdown.Option>
+                <Dropdown.Option
+                  value="Hoạt động"
+                  onClick={() => handleDropdownClick("Hoạt động")}
+                >
+                  Hoạt động
+                </Dropdown.Option>
+                <Dropdown.Option
+                  value="Ngưng hoạt động"
+                  onClick={() => handleDropdownClick("Ngưng hoạt động")}
+                >
+                  Ngưng hoạt động
+                </Dropdown.Option>
+              </Dropdown.List>
+            </Dropdown>
+          </div>
+          <div>
+            <span className="text-[16px] leading-6 text-gray500 font-semibold">
+              Trạng thái kết nối
+            </span>
+            <Dropdown>
+              <Dropdown.Select
+                className="w-[300px]"
+                placeholder={connection || "Tất cả"}
+              ></Dropdown.Select>
+              <Dropdown.List>
+                <Dropdown.Option
+                  value=""
+                  onClick={() => handleConnectClick("")}
+                >
+                  Tất cả
+                </Dropdown.Option>
+                <Dropdown.Option
+                  value="Kết nối"
+                  onClick={() => handleConnectClick("Kết nối")}
+                >
+                  Kết nối
+                </Dropdown.Option>
+                <Dropdown.Option
+                  value="Mất kết nối"
+                  onClick={() => handleConnectClick("Mất kết nối")}
+                >
+                  Mất kết nối
+                </Dropdown.Option>
+              </Dropdown.List>
+            </Dropdown>
+          </div>
         </div>
         <div className="mt-[-15px]">
           <div className="">
@@ -78,23 +191,43 @@ const Table = (props: Props) => {
                   <td>{device?.ipaddress}</td>
                   <td>
                     <div className="flex items-center gap-1">
-                      <div className="w-2 h-2 rounded-full bg-red"></div>
-                      <span>Ngưng hoạt động</span>
+                      <div
+                        className={`w-2 h-2 rounded-full ${
+                          device?.status === "Hoạt động"
+                            ? "bg-green-500"
+                            : "bg-red"
+                        } `}
+                      ></div>
+                      <span>{device?.status}</span>
                     </div>
                   </td>
                   <td>
                     <div className="flex items-center gap-1">
-                      <div className="w-2 h-2 rounded-full bg-red"></div>
-                      <span>Mất kết nối</span>
+                      <div
+                        className={`w-2 h-2 rounded-full ${
+                          device?.connection === "Kết nối"
+                            ? "bg-green-500"
+                            : "bg-red"
+                        } `}
+                      ></div>
+                      <span>{device?.connection}</span>
                     </div>
                   </td>
                   <td>
                     <div className="flex flex-col">
                       <div>
-                        <span>{device.dichvu}</span>
+                        <span>
+                          {showFullContent[device.id]
+                            ? device.dichvu
+                            : device.dichvu.length > 25
+                            ? `${device.dichvu.slice(0, 25)}...`
+                            : `${device.dichvu}`}
+                        </span>
                       </div>
-                      <div className="underline text-blueSer">
-                        <a href="q">Xem thêm</a>
+                      <div className="underline cursor-pointer text-blueSer">
+                        <span onClick={() => handleToggleContent(device.id)}>
+                          {showFullContent[device.id] ? "Ẩn đi" : "Xem thêm"}
+                        </span>
                       </div>
                     </div>
                   </td>

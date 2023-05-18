@@ -1,23 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CustomdropdownDevice from "../../../components/dropDown/CustomdropdownDevice";
 import Input from "../../../components/input/Input";
 import Label from "../../../components/label/Label";
 import CustomButton from "../../../components/button/CustomButton";
 import { useForm } from "react-hook-form";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  serverTimestamp,
+  where,
+} from "firebase/firestore";
 import { db } from "../../../firebase-app/Firebase-config";
 import { toast } from "react-toastify";
+import { Dropdown } from "../../../components/dropDown";
 
 type Props = {};
 
 const AccountInformation = (props: Props) => {
+  const [roleType, setRoletype] = useState<any>([]);
+  const [statusType, setStatustype] = useState<any>([]);
+
+  const [selectRoleType, setSelectRoleType] = useState("");
+  const [selectStatusType, setSelectStatusType] = useState("");
+
   const {
-    register,
     handleSubmit,
     control,
-    setValue,
-    getValues,
     reset,
+    setValue,
     formState: { isValid, errors },
   } = useForm({
     mode: "onChange",
@@ -28,6 +42,8 @@ const AccountInformation = (props: Props) => {
       nameaccount: "",
       password: "",
       againpassword: "",
+      roles: {},
+      listStatus: {},
     },
   });
   const handleAddAccount = async (values: any) => {
@@ -47,13 +63,64 @@ const AccountInformation = (props: Props) => {
       againpassword: "",
     });
   };
+  useEffect(() => {
+    async function getData() {
+      const colRef = collection(db, "status");
+      const querySnapshot = await getDocs(colRef);
+      let result: any[] = [];
+      querySnapshot.forEach((doc) => {
+        result.push({
+          id: doc.id,
+          ...doc.data(),
+        });
+      });
+
+      setStatustype(result);
+    }
+    getData();
+  }, []);
+  useEffect(() => {
+    async function getData() {
+      const colRef = collection(db, "role");
+      const querySnapshot = await getDocs(colRef);
+      let result: any[] = [];
+      querySnapshot.forEach((doc) => {
+        result.push({
+          id: doc.id,
+          ...doc.data(),
+        });
+      });
+
+      setRoletype(result);
+    }
+    getData();
+  }, []);
+  const handleClickOption = async (item: any) => {
+    const colRef = doc(db, "role", item.id);
+    const docData = await getDoc(colRef);
+    setValue("roles", {
+      id: docData.id,
+      ...docData.data(),
+    });
+
+    setSelectRoleType(item);
+  };
+  const handleClickOptionStatus = async (item: any) => {
+    const colRef = doc(db, "status", item.id);
+    const docData = await getDoc(colRef);
+    setValue("listStatus", {
+      id: docData.id,
+      ...docData.data(),
+    });
+    setSelectStatusType(item);
+  };
   return (
     <form onSubmit={handleSubmit(handleAddAccount)}>
       <div className="max-w-[1152px] w-full ">
         <div className="w-full bg-white min-h-[550px] h-full rounded-lg">
           <div className="px-6 pt-4">
             <span className="text-[20px] leading-[30px] font-bold text-orange">
-              Thông tin thiết bị
+              Thông tin tài khoản
             </span>
             <div className="flex gap-6">
               <div className="mt-[20px] flex-1">
@@ -112,7 +179,29 @@ const AccountInformation = (props: Props) => {
                   </Input>
                 </div>
 
-                <CustomdropdownDevice title="Vai trò: *"></CustomdropdownDevice>
+                <div className="flex flex-col gap-y-[3px]">
+                  <label className="text-[16px] leading-6 font-semibold">
+                    Vai trò: *
+                  </label>
+                  <Dropdown>
+                    <Dropdown.Select
+                      className=""
+                      placeholder="Chọn vai trò"
+                    ></Dropdown.Select>
+                    <Dropdown.List>
+                      {roleType.length > 0 &&
+                        roleType.map((item: any) => (
+                          <Dropdown.Option
+                            value=""
+                            key={item.id}
+                            onClick={() => handleClickOption(item)}
+                          >
+                            {item.name}
+                          </Dropdown.Option>
+                        ))}
+                    </Dropdown.List>
+                  </Dropdown>
+                </div>
               </div>
               <div className="mt-[20px] flex-1">
                 <div className="flex flex-col gap-y-2">
@@ -170,7 +259,29 @@ const AccountInformation = (props: Props) => {
                   </Input>
                 </div>
 
-                <CustomdropdownDevice title="Tình trạng: *"></CustomdropdownDevice>
+                <div className="flex flex-col gap-y-[3px]">
+                  <label className="text-[16px] leading-6 font-semibold">
+                    Tình trạng: *
+                  </label>
+                  <Dropdown>
+                    <Dropdown.Select
+                      className=""
+                      placeholder="Hoạt động"
+                    ></Dropdown.Select>
+                    <Dropdown.List>
+                      {statusType.length > 0 &&
+                        statusType.map((item: any) => (
+                          <Dropdown.Option
+                            value=""
+                            key={item.id}
+                            onClick={() => handleClickOptionStatus(item)}
+                          >
+                            {item.name}
+                          </Dropdown.Option>
+                        ))}
+                    </Dropdown.List>
+                  </Dropdown>
+                </div>
               </div>
             </div>
 

@@ -4,7 +4,7 @@ import Frame from "../frame/Frame";
 import InputTime from "../../components/input/InputTime";
 import NextPage from "../../components/table/NextPage";
 import TableService from "../../components/table/TableService";
-import CustomdropdownService from "../../components/dropDown/CustomdropdownService";
+
 import CustomInputSearchService from "../../components/input/CustomInputSearchService";
 import Avatar from "../user/Avatar";
 import TableServiceManager from "../../components/table/TableServiceManager";
@@ -40,9 +40,9 @@ const Manager = (props: Props) => {
       <div className="max-w-[1112px] w-full">
         <div className="flex items-center justify-between">
           <div className="flex gap-x-6">
-            <CustomdropdownService title="Tên dịch vụ"></CustomdropdownService>
+            {/* <CustomdropdownService title="Tên dịch vụ"></CustomdropdownService>
             <CustomdropdownService title="Tình trạng"></CustomdropdownService>
-            <CustomdropdownService title="Nguồn cấp"></CustomdropdownService>
+            <CustomdropdownService title="Nguồn cấp"></CustomdropdownService> */}
             <div className="flex items-center justify-center gap-4">
               <InputTime
                 className="w-[150px]"
