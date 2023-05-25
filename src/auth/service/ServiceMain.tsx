@@ -1,14 +1,8 @@
 import React from "react";
 import Avatar from "../user/Avatar";
-import Customdropdown from "../../components/dropDown/Customdropdown";
-import CustomInputPass from "../../components/input/CustomInputPass";
-import CustomInputSearch from "../../components//input/CustomInputSearch";
-import Table from "../../components/table/Table";
-import Add from "../../components/table/Add";
 import NextPage from "../../components/table/NextPage";
 import Frame from "../frame/Frame";
 import TableService from "../../components/table/TableService";
-import InputTime from "../../components/input/InputTime";
 
 type Props = {};
 

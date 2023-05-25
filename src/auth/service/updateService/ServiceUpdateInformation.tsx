@@ -57,6 +57,7 @@ const ServiceUpdateInformation = (props: Props) => {
     try {
       const docRef = doc(db, "service", serviceId);
       await updateDoc(docRef, { ...values });
+      alert("Cập nhật thành công");
       toast.success("Update user information successfully!");
     } catch (error) {
       console.log(error);

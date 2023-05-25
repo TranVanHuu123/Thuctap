@@ -12,7 +12,7 @@ import { signInWithEmailAndPassword, onAuthStateChanged } from "@firebase/auth";
 import CustomButton from "../../components/button/CustomButton";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/Auth-context";
-
+import { useDispatch, useSelector } from "react-redux";
 type Props = {};
 const schema = yup.object({
   email: yup.string().required("This field is required"),
@@ -23,6 +23,7 @@ const schema = yup.object({
 });
 const SignInPage = (props: Props) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);

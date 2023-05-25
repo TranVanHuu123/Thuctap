@@ -175,17 +175,7 @@ const DeviceInformation = (props: Props) => {
                           ))}
                       </Dropdown.List>
                     </Dropdown>
-                    {/* <select className="p-[9px] border rounded-lg border-gray">
-                      {devicetype.length > 0 &&
-                        devicetype.map((item: any) => (
-                          <option
-                            key={item.id}
-                            onClick={() => handleClickOption(item)}
-                          >
-                            {item.name}
-                          </option>
-                        ))}
-                    </select> */}
+            
                   </div>
                 </div>
                 <div className="flex flex-col gap-y-2">

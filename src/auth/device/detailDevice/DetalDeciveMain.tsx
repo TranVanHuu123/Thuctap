@@ -1,33 +1,44 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useAuth } from "../../../context/Auth-context";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../../firebase-app/Firebase-config";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchDevice } from "../../../redux-thunk/slice/deviceDetailSlice";
 
 type Props = {};
 
 const DetalDeciveMain = (props: Props) => {
   const { userInfo } = useAuth();
-  const [devicetype, setDevicetype] = useState<any>([]);
-  const [devicetypes, setDevicetypes] = useState<any>([]);
-
+  // const [devicetype, setDevicetype] = useState<any>([]);
+  // const [devicetypes, setDevicetypes] = useState<any>([]);
+  const dispatch = useDispatch();
   const [params] = useSearchParams();
   const deviceId = params.get("id");
+  const { devicetype, devicetypes } = useSelector((state: any) => state.device);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     if (!deviceId) return null;
+  //     const docRef = doc(db, "device", deviceId);
+  //     const docSnapshot = await getDoc(docRef);
+  //     setDevicetype(docSnapshot.data());
+
+  //     const devicedocRef = doc(db, "devicetype", deviceId);
+  //     const devicedocSnapshot = await getDoc(devicedocRef);
+  //     setDevicetypes(devicedocSnapshot.data());
+  //   }
+
+  //   fetchData();
+  // }, [deviceId]);
 
   useEffect(() => {
-    async function fetchData() {
-      if (!deviceId) return null;
-      const docRef = doc(db, "device", deviceId);
-      const docSnapshot = await getDoc(docRef);
-      setDevicetype(docSnapshot.data());
-
-      const devicedocRef = doc(db, "devicetype", deviceId);
-      const devicedocSnapshot = await getDoc(devicedocRef);
-      setDevicetypes(devicedocSnapshot.data());
+    if (deviceId) {
+      dispatch(fetchDevice(deviceId) as any)
+        .unwrap()
+        .catch((error: string) => {
+          console.log("Error:", error);
+        });
     }
+  }, [dispatch, deviceId]);
 
-    fetchData();
-  }, [deviceId]);
   return (
     <div className="max-w-[1112px] w-full ">
       <div className="w-full bg-white min-h-[604px] h-full rounded-lg">

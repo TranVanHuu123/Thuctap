@@ -1,20 +1,50 @@
 import React, { useEffect, useState } from "react";
-import Add from "./Add";
 import AddService from "./AddService";
 import { useNavigate } from "react-router-dom";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../firebase-app/Firebase-config";
 import InputTime from "../input/InputTime";
-import Customdropdown from "../dropDown/Customdropdown";
 import { Dropdown } from "../dropDown";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setServiceList,
+  setFilter,
+  setDropdown,
+  selectServiceList,
+  selectFilter,
+  selectDropdown,
+} from "../../redux-thunk/slice/serviceSlice";
 
 type Props = {};
 
 const TableService = (props: Props) => {
-  const [serviceList, setServiceList] = useState<any>([]);
+  // const [serviceList, setServiceList] = useState<any>([]);
+  // const navigate = useNavigate();
+  // const [filter, setFilter] = useState("");
+  // const [dropdown, setDropdown] = useState("");
+
+  const serviceList = useSelector(selectServiceList);
+  const filter = useSelector(selectFilter);
+  const dropdown = useSelector(selectDropdown);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [filter, setFilter] = useState("");
-  const [dropdown, setDropdown] = useState("");
+
+  // useEffect(() => {
+  //   const colRef = collection(db, "service");
+  //   const newRef = filter
+  //     ? query(colRef, where("idservice", "==", filter))
+  //     : colRef;
+  //   onSnapshot(newRef, (snapshot) => {
+  //     const results: any[] = [];
+  //     snapshot.forEach((doc) => {
+  //       results.push({
+  //         id: doc.id,
+  //         ...doc.data(),
+  //       });
+  //     });
+  //     setServiceList(results);
+  //   });
+  // }, [filter]);
 
   useEffect(() => {
     const colRef = collection(db, "service");
@@ -29,9 +59,26 @@ const TableService = (props: Props) => {
           ...doc.data(),
         });
       });
-      setServiceList(results);
+      dispatch(setServiceList(results));
     });
-  }, [filter]);
+  }, [filter, dispatch]);
+
+  // useEffect(() => {
+  //   const colRef = collection(db, "service");
+  //   const newRef = dropdown
+  //     ? query(colRef, where("status", "==", dropdown))
+  //     : colRef;
+  //   onSnapshot(newRef, (snapshot) => {
+  //     const results: any[] = [];
+  //     snapshot.forEach((doc) => {
+  //       results.push({
+  //         id: doc.id,
+  //         ...doc.data(),
+  //       });
+  //     });
+  //     setServiceList(results);
+  //   });
+  // }, [dropdown]);
 
   useEffect(() => {
     const colRef = collection(db, "service");
@@ -46,11 +93,16 @@ const TableService = (props: Props) => {
           ...doc.data(),
         });
       });
-      setServiceList(results);
+      dispatch(setServiceList(results));
     });
-  }, [dropdown]);
+  }, [dropdown, dispatch]);
+
   const handleDropdownClick = (value: any) => {
-    setDropdown(value);
+    dispatch(setDropdown(value));
+    // setDropdown(value);
+  };
+  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setFilter(e.target.value));
   };
   return (
     <div className="max-w-[1112px] w-full">
@@ -102,7 +154,8 @@ const TableService = (props: Props) => {
             <span className="text-[16px] leading-6 font-semibold">Từ khoá</span>
             <div className="relative flex items-center">
               <input
-                onChange={(e) => setFilter(e.target.value)}
+                // onChange={(e) => setFilter(e.target.value)}
+                onChange={handleFilterChange}
                 placeholder="Nhập từ khóa"
                 autoComplete="off"
                 className="pl-2 w-[300px] h-[44px] rounded-lg border-[1px] border-solid border-gray"

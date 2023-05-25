@@ -47,6 +47,7 @@ const UpdateRoleMain = (props: Props) => {
     try {
       const docRef = doc(db, "role", roleId);
       await updateDoc(docRef, { ...values });
+      alert("Cập nhật thành công");
       toast.success("Update user information successfully!");
     } catch (error) {
       console.log(error);

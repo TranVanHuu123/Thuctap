@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CustomdropdownDevice from "../../../components/dropDown/CustomdropdownDevice";
+// import CustomdropdownDevice from "../../../components/dropDown/CustomdropdownDevice";
 import Input from "../../../components/input/Input";
 import Label from "../../../components/label/Label";
 import CustomButton from "../../../components/button/CustomButton";

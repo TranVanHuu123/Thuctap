@@ -78,6 +78,7 @@ const UpdateDeviceInformation = (props: Props) => {
     try {
       const docRef = doc(db, "device", deviceId);
       await updateDoc(docRef, { ...values });
+      alert("Cập nhật thành công");
       toast.success("Update user information successfully!");
     } catch (error) {
       console.log(error);
